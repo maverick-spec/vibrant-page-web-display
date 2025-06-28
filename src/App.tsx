@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -15,11 +14,8 @@ import ExecutionModel from './pages/ExecutionModel';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import PerformanceMarketing from './pages/growth-solutions/PerformanceMarketing';
-import SocialMediaMarketing from './pages/growth-solutions/SocialMediaMarketing';
-import CreativeSolutions from './pages/growth-solutions/CreativeSolutions';
-import ConversionOptimization from './pages/growth-solutions/ConversionOptimization';
-import SEOWebsiteGrowth from './pages/growth-solutions/SEOWebsiteGrowth';
-import WebsiteSolutions from './pages/growth-solutions/WebsiteSolutions';
+import SEO from './pages/growth-solutions/SEO';
+import SocialMedia from './pages/growth-solutions/SocialMedia';
 import AnalyticsTracking from './pages/growth-solutions/specialized-growth-solutions/AnalyticsTracking';
 import ProcessAutomation from './pages/strategic-solutions/ProcessAutomation';
 import DigitalSystemsEnablement from './pages/strategic-solutions/DigitalSystemsEnablement';
@@ -29,14 +25,11 @@ import SolutionsByFunction from './pages/strategic-solutions/SolutionsByFunction
 import FinanceOperations from './pages/strategic-solutions/FinanceOperations';
 import HumanResources from './pages/strategic-solutions/HumanResources';
 import Operations from './pages/strategic-solutions/Operations';
-import ComplianceGovernance from './pages/strategic-solutions/ComplianceGovernance';
-import CrossFunctionalLeadership from './pages/strategic-solutions/CrossFunctionalLeadership';
 import NotFound from './pages/NotFound';
 import Layout from './components/layout/Layout';
 import ScrollToTop from './components/ScrollToTop';
 import CookieConsent from './components/CookieConsent';
 import SocialMeta from './components/SocialMeta';
-import EmailMarketing from './pages/growth-solutions/EmailMarketing';
 import AuditInsights from './pages/growth-solutions/specialized-growth-solutions/AuditInsights';
 import LeadGeneration from './pages/growth-solutions/specialized-growth-solutions/LeadGeneration';
 import BrandStrategy from './pages/growth-solutions/specialized-growth-solutions/BrandStrategy';
@@ -67,14 +60,10 @@ function App() {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-service" element={<TermsOfService />} />
             
-            {/* Growth Solutions Routes */}
+            {/* Growth Solutions Routes - Only keeping existing template-based pages */}
             <Route path="growth-solutions/performance-marketing" element={<PerformanceMarketing />} />
-            <Route path="growth-solutions/social-media-marketing" element={<SocialMediaMarketing />} />
-            <Route path="growth-solutions/email-marketing" element={<EmailMarketing />} />
-            <Route path="growth-solutions/creative-solutions" element={<CreativeSolutions />} />
-            <Route path="growth-solutions/conversion-optimization" element={<ConversionOptimization />} />
-            <Route path="growth-solutions/seo-website-growth" element={<SEOWebsiteGrowth />} />
-            <Route path="growth-solutions/website-solutions" element={<WebsiteSolutions />} />
+            <Route path="growth-solutions/seo" element={<SEO />} />
+            <Route path="growth-solutions/social-media" element={<SocialMedia />} />
             
             {/* Specialized Growth Solutions Routes */}
             <Route path="specialized-growth-solutions/analytics-tracking" element={<AnalyticsTracking />} />
@@ -94,8 +83,6 @@ function App() {
             <Route path="strategic-solutions/finance-operations" element={<FinanceOperations />} />
             <Route path="strategic-solutions/human-resources" element={<HumanResources />} />
             <Route path="strategic-solutions/operations" element={<Operations />} />
-            <Route path="strategic-solutions/compliance-governance" element={<ComplianceGovernance />} />
-            <Route path="strategic-solutions/cross-functional-leadership" element={<CrossFunctionalLeadership />} />
             
             <Route path="*" element={<NotFound />} />
           </Route>
