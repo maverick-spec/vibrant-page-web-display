@@ -1,20 +1,20 @@
+import React from 'react';
+import Hero from '@/components/sections/Hero';
+import AboutSection from '@/components/sections/AboutSection';
+import TimelineSection from '@/components/sections/TimelineSection';
+import ContactSection from '@/components/sections/ContactSection';
+import CookieConsent from '@/components/CookieConsent';
+import SocialMeta from '@/components/SocialMeta';
 
-import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
-import { Services } from "@/components/Services";
-import { Portfolio } from "@/components/Portfolio";
-import { Contact } from "@/components/Contact";
-import { Navigation } from "@/components/Navigation";
-
-const Index = () => {
+const Index: React.FC = () => {
   return (
-    <div className="min-h-screen">
-      <Navigation />
+    <div>
+      <SocialMeta />
       <Hero />
-      <About />
-      <Services />
-      <Portfolio />
-      <Contact />
+      <TimelineSection />
+      <AboutSection />
+      <ContactSection />
+      <CookieConsent />
     </div>
   );
 };
