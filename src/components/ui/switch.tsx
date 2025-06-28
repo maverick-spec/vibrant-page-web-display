@@ -1,3 +1,4 @@
+
 import { twMerge } from "tailwind-merge";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
@@ -14,7 +15,7 @@ export const Switch = ({
       <label
         htmlFor="checkbox"
         className={twMerge(
-          "h-8 px-1 flex items-center relative cursor-pointer transition-all duration-500 rounded-full w-[64px]",
+          "h-7 px-1 flex items-center relative cursor-pointer transition-all duration-500 rounded-full w-[52px]",
           // Deep inset shadow for depth + outer elevation
           "shadow-[inset_0_3px_6px_rgba(0,0,0,0.4),inset_0_-2px_4px_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.25)]",
           // Gradient background for depth
@@ -26,13 +27,11 @@ export const Switch = ({
         {/* Deep track groove */}
         <div className="absolute inset-1 rounded-full bg-black/20" />
         
-        {/* Liquid fill effect - REMOVED */}
-        
         {/* Main button with liquid movement */}
         <motion.div
           initial={false}
           animate={{
-            x: checked ? 30 : 0,
+            x: checked ? 24 : 0,
           }}
           transition={{
             type: "spring",
@@ -51,7 +50,7 @@ export const Switch = ({
               ease: "easeOut"
             }}
             className={twMerge(
-              "h-[24px] w-[24px] rounded-full relative",
+              "h-[20px] w-[20px] rounded-full relative",
               // Pure white button - no shadows that cause brown
               "bg-white",
               "border border-gray-200"
@@ -75,7 +74,7 @@ export const Switch = ({
                     transition={{ duration: 0.2 }}
                     className="flex items-center justify-center text-slate-700"
                   >
-                    <Moon className="w-3 h-3 text-primary" strokeWidth={2} fill="currentColor" />
+                    <Moon className="w-2.5 h-2.5 text-primary" strokeWidth={2} fill="currentColor" />
                   </motion.span>
                 ) : (
                   <motion.span
@@ -86,7 +85,7 @@ export const Switch = ({
                     transition={{ duration: 0.2 }}
                     className="flex items-center justify-center text-slate-700"
                   >
-                    <Sun className="w-3 h-3 text-primary" strokeWidth={2} fill="currentColor" />
+                    <Sun className="w-2.5 h-2.5 text-primary" strokeWidth={2} fill="currentColor" />
                   </motion.span>
                 )}
               </AnimatePresence>
