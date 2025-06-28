@@ -18,7 +18,7 @@ const GrowthSolutions: React.FC = () => {
     icon: Users,
     title: 'Social Media Marketing & Brand Engagement',
     description: 'Build audience, spark action. Comprehensive social media strategies that create meaningful connections and drive engagement across all platforms.',
-    link: '/growth-solutions/social-media-marketing'
+    link: '/growth-solutions/social-media'
   }, {
     icon: Mail,
     title: 'Email Marketing & Marketing Automation',
@@ -38,7 +38,7 @@ const GrowthSolutions: React.FC = () => {
     icon: Search,
     title: 'SEO & Website Growth',
     description: 'Rank higher. Grow faster. Comprehensive SEO strategies that improve your search visibility and drive organic traffic growth.',
-    link: '/growth-solutions/seo-website-growth'
+    link: '/growth-solutions/seo'
   }, {
     icon: Globe,
     title: 'Website Solutions',

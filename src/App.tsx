@@ -36,6 +36,7 @@ import BrandStrategy from './pages/growth-solutions/specialized-growth-solutions
 import ContentStrategy from './pages/growth-solutions/specialized-growth-solutions/ContentStrategy';
 import AIContent from './pages/growth-solutions/specialized-growth-solutions/AIContent';
 import ExecutiveBranding from './pages/growth-solutions/specialized-growth-solutions/ExecutiveBranding';
+import EmailMarketing from './pages/growth-solutions/EmailMarketing';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
             <Route path="growth-solutions/performance-marketing" element={<PerformanceMarketing />} />
             <Route path="growth-solutions/seo" element={<SEO />} />
             <Route path="growth-solutions/social-media" element={<SocialMedia />} />
+            <Route path="growth-solutions/email-marketing" element={<EmailMarketing />} />
             
             {/* Specialized Growth Solutions Routes */}
             <Route path="specialized-growth-solutions/analytics-tracking" element={<AnalyticsTracking />} />
