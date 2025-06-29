@@ -105,12 +105,12 @@ const SolutionTemplate: React.FC<SolutionTemplateProps> = ({
                 viewport={{ once: true }}
                 className="px-2"
               >
-                <Card className="h-full border-0 bg-card custom-shadow hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <Card className="h-full bg-card border-border custom-shadow hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <CardHeader className="pb-4">
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                       <service.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <CardTitle className="text-lg sm:text-xl font-bold">{service.title}</CardTitle>
+                    <CardTitle className="text-lg sm:text-xl font-bold text-foreground">{service.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{service.description}</p>

@@ -109,7 +109,7 @@ const GrowthSolutions: React.FC = () => {
                 className="px-2"
               >
                 <Link to={service.link}>
-                  <Card className="h-full group cursor-pointer relative">
+                  <Card className="h-full group cursor-pointer relative bg-card border-border hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <SquareArrowOutUpRight 
                       className="absolute top-3 sm:top-4 right-3 sm:right-4 w-5 h-5 sm:w-6 sm:h-6 text-primary/80 drop-shadow-lg animate-pulse pointer-events-none select-none"
                       aria-label="More info"
@@ -178,7 +178,7 @@ const GrowthSolutions: React.FC = () => {
             duration: 0.8,
             delay: 0.2
           }} className="px-2">
-              <Card>
+              <Card className="bg-card border-border">
                 <CardHeader className="text-center">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
