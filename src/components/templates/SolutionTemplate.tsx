@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import ThemeBreadcrumb from '@/components/ui/theme-breadcrumb';
 
 interface Service {
   icon: LucideIcon;
@@ -36,51 +37,53 @@ const SolutionTemplate: React.FC<SolutionTemplateProps> = ({
   backLinkText
 }) => {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="pt-20 sm:pt-24 pb-12 sm:pb-16 bg-gradient-to-br from-primary/10 to-primary/5"
-      >
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium mb-6 sm:mb-8">
-              <CategoryIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              {category}
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6 px-2">
-              {title}
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed px-2">
-              {description}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link to="/contact">
-                  Get Started
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                <Link to={backLink}>
-                  {backLinkText}
-                </Link>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </motion.section>
+    <div className="min-h-screen bg-background pt-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <ThemeBreadcrumb />
+        
+        {/* Hero Section */}
+        <motion.section 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="pt-8 pb-12 sm:pb-16"
+        >
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium mb-6 sm:mb-8">
+                <CategoryIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+                {category}
+              </div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6 px-2">
+                {title}
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed px-2">
+                {description}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+                <Button asChild size="lg" className="w-full sm:w-auto">
+                  <Link to="/contact">
+                    Get Started
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  <Link to={backLink}>
+                    {backLinkText}
+                  </Link>
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </motion.section>
 
-      {/* Services Section */}
-      <section className="py-16 sm:py-20 md:py-24">
-        <div className="container mx-auto px-4">
+        {/* Services Section */}
+        <section className="py-16 sm:py-20 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -119,17 +122,15 @@ const SolutionTemplate: React.FC<SolutionTemplateProps> = ({
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-primary/10 to-accent/10"
-      >
-        <div className="container mx-auto px-4 text-center">
+        {/* CTA Section */}
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-16 sm:py-20 md:py-24 text-center"
+        >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6 px-2">
             {ctaTitle}
           </h2>
@@ -142,8 +143,8 @@ const SolutionTemplate: React.FC<SolutionTemplateProps> = ({
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
-        </div>
-      </motion.section>
+        </motion.section>
+      </div>
     </div>
   );
 };

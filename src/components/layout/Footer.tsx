@@ -1,25 +1,12 @@
+
 import * as React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { Send } from "lucide-react"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
 import LogoTeal from '/Logo-Teal.png';
 
-interface FooterProps {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
-}
-
-const Footer: React.FC<FooterProps> = ({ isDarkMode, toggleDarkMode }) => {
+const Footer: React.FC = () => {
   const [email, setEmail] = React.useState("");
   const [isSubscribing, setIsSubscribing] = React.useState(false);
   const navigate = useNavigate();
@@ -78,22 +65,18 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, toggleDarkMode }) => {
       { name: 'Process & Workflow Automation', href: '/strategic-solutions/process-automation' },
       { name: 'Digital Systems Enablement', href: '/strategic-solutions/digital-systems-enablement' },
       { name: 'Custom Solution Engineering', href: '/strategic-solutions/custom-solution-engineering' },
-      { name: 'Enterprise Evolution & Strategic Transformation', href: '/strategic-solutions/enterprise-evolution-strategic-transformation' },
+      { name: 'Enterprise Evolution & Strategic Transformation', href: '/strategic-solutions/enterprise-evolution' },
     ],
     strategicByFunction: [
-      { name: 'Finance', href: '/strategic-solutions/finance-operations' },
+      { name: 'Finance Operations', href: '/strategic-solutions/finance-operations' },
       { name: 'Operations', href: '/strategic-solutions/operations' },
+      { name: 'Human Resources', href: '/strategic-solutions/human-resources' },
       { name: 'Compliance & Governance', href: '/strategic-solutions/compliance-governance' },
       { name: 'Cross-Functional Leadership', href: '/strategic-solutions/cross-functional-leadership' },
+      { name: 'Market Research', href: '/strategic-solutions/market-research' },
+      { name: 'Process Optimization', href: '/strategic-solutions/process-optimization' },
     ],
   };
-
-  const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: 'https://facebook.com/perssonify', tooltip: 'Follow us on Facebook' },
-    { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/perssonify', tooltip: 'Follow us on Twitter' },
-    { name: 'Instagram', icon: Instagram, href: 'https://instagram.com/perssonify', tooltip: 'Follow us on Instagram' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/perssonify', tooltip: 'Connect with us on LinkedIn' },
-  ];
 
   return (
     <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
@@ -137,171 +120,116 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode, toggleDarkMode }) => {
                 <Button
                   type="submit"
                   size="sm"
-                  className="absolute right-1 top-1 h-7 w-7 rounded-full bg-primary p-0 hover:bg-primary/90"
+                  className="absolute right-1 top-1 h-8 w-8 p-0"
                   disabled={isSubscribing}
                 >
                   <Send className="h-4 w-4" />
-                  <span className="sr-only">Subscribe to newsletter</span>
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground">
-                By subscribing, you agree to our{" "}
-                <Link to="/privacy-policy" className="underline hover:text-primary">
-                  Privacy Policy
-                </Link>
-              </p>
             </form>
-            <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation */}
           <div className="md:col-span-2">
-            <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
-            <nav className="space-y-2 text-sm">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Company</h3>
+            <ul className="space-y-2">
               {navigation.map((item) => (
-                <Link 
-                  key={item.name}
-                  to={item.href} 
-                  className="block transition-colors hover:text-primary"
-                >
-                  {item.name}
-                </Link>
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               ))}
-            </nav>
+            </ul>
           </div>
 
-          {/* Solutions - Grid Layout */}
-          <div className="md:col-span-6">
-            <h3 className="mb-4 text-lg font-semibold">Our Solutions</h3>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <h4 className="mb-2 text-sm font-medium text-muted-foreground">Core Growth Solutions</h4>
-                <nav className="space-y-1 text-xs">
-                  {solutions.coreGrowth.map((item) => (
-                    <Link 
-                      key={item.name}
-                      to={item.href} 
-                      className="block transition-colors hover:text-primary"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-                
-                <h4 className="mb-2 mt-4 text-sm font-medium text-muted-foreground">Specialized Growth Solutions</h4>
-                <nav className="space-y-1 text-xs">
-                  {solutions.specializedGrowth.map((item) => (
-                    <Link 
-                      key={item.name}
-                      to={item.href} 
-                      className="block transition-colors hover:text-primary"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-              
-              <div>
-                <h4 className="mb-2 text-sm font-medium text-muted-foreground">Core Strategic Solutions</h4>
-                <nav className="space-y-1 text-xs">
-                  {solutions.coreStrategic.map((item) => (
-                    <Link 
-                      key={item.name}
-                      to={item.href} 
-                      className="block transition-colors hover:text-primary"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-                
-                <h4 className="mb-2 mt-4 text-sm font-medium text-muted-foreground">Solutions By Function</h4>
-                <nav className="space-y-1 text-xs">
-                  {solutions.strategicByFunction.map((item) => (
-                    <Link 
-                      key={item.name}
-                      to={item.href} 
-                      className="block transition-colors hover:text-primary"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            </div>
+          {/* Core Growth Solutions */}
+          <div className="md:col-span-2">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Core Growth Solutions</h3>
+            <ul className="space-y-2">
+              {solutions.coreGrowth.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Social Links and Theme Toggle */}
-          <div className="relative md:col-span-2">
-            <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
-            <div className="mb-6 flex flex-wrap gap-4">
-              {socialLinks.map((social) => (
-                <TooltipProvider key={social.name}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <a 
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button 
-                          variant="outline" 
-                          size="icon" 
-                          className="rounded-full transition-colors hover:bg-primary hover:text-primary-foreground"
-                        >
-                          <social.icon className="h-4 w-4" />
-                          <span className="sr-only">{social.name}</span>
-                        </Button>
-                      </a>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{social.tooltip}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+          {/* Specialized Growth Solutions */}
+          <div className="md:col-span-2">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Specialized Growth Solutions</h3>
+            <ul className="space-y-2">
+              {solutions.specializedGrowth.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               ))}
-            </div>
-            <div className="flex items-center space-x-2">
-              <button 
-                onClick={toggleDarkMode}
-                className="p-1 hover:bg-muted rounded transition-colors"
-                aria-label="Switch to light mode"
-              >
-              </button>
-              <Switch
-                checked={isDarkMode}
-                setChecked={toggleDarkMode}
-              />
-              <button 
-                onClick={toggleDarkMode}
-                className="p-1 hover:bg-muted rounded transition-colors"
-                aria-label="Switch to dark mode"
-              >
-              </button>
-              <Label htmlFor="footer-dark-mode" className="sr-only">
-                Toggle dark mode
-              </Label>
-            </div>
+            </ul>
+          </div>
+
+          {/* Core Strategic Solutions */}
+          <div className="md:col-span-2">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Core Strategic Solutions</h3>
+            <ul className="space-y-2">
+              {solutions.coreStrategic.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Strategic Solutions by Function */}
+          <div className="md:col-span-2">
+            <h3 className="mb-4 text-sm font-semibold text-foreground">Strategic Solutions by Function</h3>
+            <ul className="space-y-2">
+              {solutions.strategicByFunction.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.href}
+                    className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Copyright Section */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Perssonify. All rights reserved.
-          </p>
-          <nav className="flex gap-4 text-sm">
-            <Link to="/privacy-policy" className="transition-colors hover:text-primary">
-              Privacy Policy
-            </Link>
-            <Link to="/terms-of-service" className="transition-colors hover:text-primary">
-              Terms of Service
-            </Link>
-            <Link to="/cookies" className="transition-colors hover:text-primary">
-              Cookie Settings
-            </Link>
-          </nav>
+        {/* Contact Information */}
+        <div className="mt-12 border-t pt-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div className="mb-4 md:mb-0">
+              <h3 className="text-sm font-semibold text-foreground mb-2">Contact Information</h3>
+              <div className="space-y-1 text-xs text-muted-foreground">
+                <p>Email: contact@perssonify.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+                <p>Address: 123 Business Ave, Suite 100, City, State 12345</p>
+              </div>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              <p>&copy; 2024 Perssonify. All rights reserved.</p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
