@@ -92,11 +92,23 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
   
-  /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
+  /* Mobile responsive adjustments - Mobile first approach */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (min-width: 640px) {
     .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
   }
   
@@ -104,6 +116,29 @@
   @media (max-width: 1024px) {
     * {
       transition: all 0.2s ease-in-out;
+    }
+  }
+  
+  /* Mobile-first typography scaling */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 1.875rem; /* text-3xl */
+      line-height: 2.25rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem; /* text-2xl */
+      line-height: 2rem;
+    }
+    
+    .text-6xl {
+      font-size: 2.25rem !important; /* text-4xl on mobile */
+      line-height: 2.5rem !important;
+    }
+    
+    .text-5xl {
+      font-size: 1.875rem !important; /* text-3xl on mobile */
+      line-height: 2.25rem !important;
     }
   }
 }

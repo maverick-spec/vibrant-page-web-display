@@ -173,17 +173,17 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border transition-all duration-300">
-      <div className="container mx-auto px-2 sm:px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 relative">
-          {/* Logo */}
+          {/* Logo - Better positioning */}
           <button 
             onClick={handleLogoClick}
-            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
+            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0 ml-2 sm:ml-0"
           >
             <img
               src={LogoTeal}
               alt="Perssonify Logo"
-              className="object-contain h-8 w-24 sm:h-10 sm:w-32"
+              className="object-contain h-8 w-20 sm:h-10 sm:w-28 md:w-32"
             />
           </button>
 
@@ -218,11 +218,7 @@ const Header: React.FC = () => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: 'easeOut' }}
-                          className={`absolute mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden ${
-                            item.name === 'Strategic Solutions' 
-                              ? 'right-(-100px) transform translate-x-80' 
-                              : 'left-1/2 transform -translate-x-1/2'
-                          }`}
+                          className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden"
                           style={{ width: '640px' }}
                           onMouseEnter={clearDropdownTimeout}
                           onMouseLeave={handleMouseLeave}
@@ -293,15 +289,15 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Right side buttons */}
-          <div className="flex items-center space-x-1 sm:space-x-2">
+          {/* Right side buttons - Better spacing */}
+          <div className="flex items-center space-x-2 sm:space-x-3 mr-2 sm:mr-0">
             <div className="flex items-center space-x-1">
               <Switch
                 checked={isDarkMode}
                 setChecked={toggleDarkMode}
               />
             </div>
-            <Button asChild size="sm" className="h-8 text-xs px-3 hidden sm:inline-flex">
+            <Button asChild size="sm" className="h-8 text-xs px-2 sm:px-3 hidden sm:inline-flex">
               <Link to="/contact">Get Started</Link>
             </Button>
             
