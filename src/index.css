@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -71,20 +72,20 @@
 
 /* Enhanced Layout and Spacing - Mobile First */
 .page-content {
-  padding-top: 60px;
-  min-height: calc(100vh - 60px);
+  padding-top: 75px;
+  min-height: calc(100vh - 75px);
 }
 
 @media (min-width: 640px) {
   .page-content {
-    padding-top: 70px;
-    min-height: calc(100vh - 70px);
+    padding-top: 80px;
+    min-height: calc(100vh - 80px);
   }
 }
 
 /* Container improvements with better mobile spacing */
 .container {
-  @apply mx-auto px-3 sm:px-4 lg:px-6 xl:px-8;
+  @apply mx-auto px-4 sm:px-6 lg:px-8 xl:px-10;
   max-width: min(1400px, 95vw);
 }
 
@@ -153,7 +154,7 @@
   .gap-12 { gap: 4rem; }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling for all devices */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -161,6 +162,32 @@ html {
 
 body {
   overflow-x: hidden;
+}
+
+/* Enhanced smooth scrolling for mobile */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  input, textarea, button, a {
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+  }
 }
 
 /* Focus styles */
@@ -186,7 +213,11 @@ input:focus, textarea:focus {
 
 /* Custom shadow for cards */
 .custom-shadow {
-  box-shadow: 7px 7px 0px 0px #F2F2F2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dark .custom-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Animation utilities */
@@ -258,5 +289,33 @@ input:focus, textarea:focus {
   h1, h2, h3, h4, h5, h6 {
     word-wrap: break-word;
     hyphens: auto;
+  }
+  
+  /* Mobile-optimized padding */
+  .px-2 { padding-left: 1rem; padding-right: 1rem; }
+  .px-4 { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Improved mobile card spacing */
+@media (max-width: 639px) {
+  .grid > * {
+    margin-bottom: 1.5rem;
+  }
+  
+  .grid > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Perfect mobile responsiveness for sections */
+@media (max-width: 640px) {
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

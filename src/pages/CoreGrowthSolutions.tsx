@@ -1,7 +1,7 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { IconHover3D } from '@/components/ui/icon-3d-hover';
 import { 
   TrendingUp, 
   Users, 
@@ -22,43 +22,43 @@ const CoreGrowthSolutions: React.FC = () => {
       title: "Performance Marketing & Paid Media",
       description: "High-ROI ads that convert. Strategic campaign management across platforms to maximize your advertising spend and drive measurable results.",
       icon: TrendingUp,
-      link: "/growth-solutions/PerformanceMarketing"
+      link: "/growth-solutions/performance-marketing"
     },
     {
       title: "Social Media Marketing & Brand Engagement",
       description: "Build audience, spark action. Comprehensive social media strategies that create meaningful connections and drive engagement across all platforms.",
       icon: Users,
-      link: "/growth-solutions/SocialMediaMarketing"
+      link: "/growth-solutions/social-media"
     },
     {
       title: "Email Marketing & Marketing Automation",
       description: "Automate nurture, drive loyalty. Sophisticated email campaigns and automation workflows that convert prospects into loyal customers.",
       icon: Mail,
-      link: "/growth-solutions/EmailMarketing"
+      link: "/growth-solutions/email-marketing"
     },
     {
       title: "Creative Solutions",
       description: "Visuals that get results. Eye-catching designs and compelling creative assets that capture attention and drive conversions.",
       icon: Palette,
-      link: "/growth-solutions/CreativeSolutions"
+      link: "/growth-solutions/creative-solutions"
     },
     {
       title: "Conversion Rate Optimization (CRO)",
       description: "Test. Refine. Convert more. Data-driven optimization strategies that turn more visitors into customers through systematic testing and improvement.",
       icon: Target,
-      link: "/growth-solutions/ConversionOptimization"
+      link: "/growth-solutions/conversion-optimization"
     },
     {
       title: "Search Engine Optimization (SEO) & Website Growth",
       description: "Rank higher. Grow faster. Comprehensive SEO strategies that improve your search visibility and drive organic traffic growth.",
       icon: Search,
-      link: "/growth-solutions/SEOWebsiteGrowth"
+      link: "/growth-solutions/seo"
     },
     {
       title: "Website Solutions",
       description: "Seamless, scalable, conversion-ready. Professional websites built for performance, user experience, and business growth.",
       icon: Globe,
-      link: "/growth-solutions/WebsiteSolutions"
+      link: "/growth-solutions/website-solutions"
     }
   ];
 
@@ -99,7 +99,7 @@ const CoreGrowthSolutions: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
               >
-                <Card className="h-full group cursor-pointer">
+                <Card className="h-full group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                   <CardHeader>
                     <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                       <solution.icon className="w-8 h-8 text-primary" />
@@ -109,10 +109,10 @@ const CoreGrowthSolutions: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed mb-6">
                       {solution.description}
                     </p>
-                    <Button asChild className="mt-6 w-full flex items-center justify-center gap-2">
+                    <Button asChild className="w-full flex items-center justify-center gap-2">
                       <Link to={solution.link} className="flex items-center justify-center w-full">
                         Learn More
                         <SquareArrowOutUpRight className="w-4 h-4 ml-2" />

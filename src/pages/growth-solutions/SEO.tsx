@@ -1,43 +1,43 @@
 
 import React from 'react';
-import { Search, Target, BarChart, TrendingUp } from 'lucide-react';
 import SolutionTemplate from '@/components/templates/SolutionTemplate';
+import { Search, TrendingUp, FileText, BarChart3, Globe } from 'lucide-react';
 
 const SEO: React.FC = () => {
   const services = [
     {
       icon: Search,
-      title: 'Technical SEO Optimization',
-      description: 'Complete technical audit and optimization including site speed, mobile optimization, and search engine crawlability.'
+      title: 'Technical SEO & Site Optimization',
+      description: 'Complete technical SEO audits and optimizations that improve site speed, crawlability, and search engine performance.'
     },
     {
-      icon: Target,
-      title: 'Keyword Strategy & Research',
-      description: 'In-depth keyword research and strategic targeting to capture high-intent traffic and improve search rankings.'
-    },
-    {
-      icon: BarChart,
-      title: 'Content Optimization',
-      description: 'SEO-optimized content creation and existing content enhancement to improve search visibility and user engagement.'
+      icon: FileText,
+      title: 'Content Strategy & SEO Writing',
+      description: 'Strategic content creation and optimization that ranks well in search engines while providing value to your audience.'
     },
     {
       icon: TrendingUp,
-      title: 'Performance Tracking',
-      description: 'Comprehensive SEO analytics, ranking tracking, and performance reporting to measure and improve results.'
+      title: 'Keyword Research & Strategy',
+      description: 'Comprehensive keyword research and competitive analysis to identify high-value opportunities for organic growth.'
+    },
+    {
+      icon: BarChart3,
+      title: 'Local SEO & Google My Business',
+      description: 'Local search optimization and Google My Business management that drives foot traffic and local customer acquisition.'
     }
   ];
 
   return (
     <SolutionTemplate
-      category="Growth Solutions"
-      title="SEO Services"
-      description="Strategic search engine optimization that drives organic traffic, improves rankings, and delivers sustainable long-term growth."
+      category="Core Growth Solutions"
+      title="Search Engine Optimization (SEO) & Website Growth"
+      description="Comprehensive SEO strategies that improve search visibility, drive organic traffic, and establish your brand as an authority in your industry."
       categoryIcon={Search}
       services={services}
       ctaTitle="Ready to Dominate Search Results?"
-      ctaDescription="Let's create an SEO strategy that drives sustainable organic growth for your business."
-      backLink="/growth-solutions"
-      backLinkText="View All Growth Solutions"
+      ctaDescription="Let's optimize your online presence to drive organic traffic and establish your brand as an industry authority."
+      backLink="/core-growth-solutions"
+      backLinkText="View All Core Growth Solutions"
     />
   );
 };

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
@@ -16,7 +17,17 @@ import TermsOfService from './pages/TermsOfService';
 import PerformanceMarketing from './pages/growth-solutions/PerformanceMarketing';
 import SEO from './pages/growth-solutions/SEO';
 import SocialMedia from './pages/growth-solutions/SocialMedia';
+import EmailMarketing from './pages/growth-solutions/EmailMarketing';
+import CreativeSolutions from './pages/growth-solutions/CreativeSolutions';
+import ConversionOptimization from './pages/growth-solutions/ConversionOptimization';
+import WebsiteSolutions from './pages/growth-solutions/WebsiteSolutions';
 import AnalyticsTracking from './pages/growth-solutions/specialized-growth-solutions/AnalyticsTracking';
+import AuditInsights from './pages/growth-solutions/specialized-growth-solutions/AuditInsights';
+import LeadGeneration from './pages/growth-solutions/specialized-growth-solutions/LeadGeneration';
+import BrandStrategy from './pages/growth-solutions/specialized-growth-solutions/BrandStrategy';
+import ContentStrategy from './pages/growth-solutions/specialized-growth-solutions/ContentStrategy';
+import AIContent from './pages/growth-solutions/specialized-growth-solutions/AIContent';
+import ExecutiveBranding from './pages/growth-solutions/specialized-growth-solutions/ExecutiveBranding';
 import ProcessAutomation from './pages/strategic-solutions/ProcessAutomation';
 import DigitalSystemsEnablement from './pages/strategic-solutions/DigitalSystemsEnablement';
 import CustomSolutionEngineering from './pages/strategic-solutions/CustomSolutionEngineering';
@@ -30,13 +41,6 @@ import Layout from './components/layout/Layout';
 import ScrollToTop from './components/ScrollToTop';
 import CookieConsent from './components/CookieConsent';
 import SocialMeta from './components/SocialMeta';
-import AuditInsights from './pages/growth-solutions/specialized-growth-solutions/AuditInsights';
-import LeadGeneration from './pages/growth-solutions/specialized-growth-solutions/LeadGeneration';
-import BrandStrategy from './pages/growth-solutions/specialized-growth-solutions/BrandStrategy';
-import ContentStrategy from './pages/growth-solutions/specialized-growth-solutions/ContentStrategy';
-import AIContent from './pages/growth-solutions/specialized-growth-solutions/AIContent';
-import ExecutiveBranding from './pages/growth-solutions/specialized-growth-solutions/ExecutiveBranding';
-import EmailMarketing from './pages/growth-solutions/EmailMarketing';
 
 function App() {
   return (
@@ -61,11 +65,14 @@ function App() {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-service" element={<TermsOfService />} />
             
-            {/* Growth Solutions Routes - Only keeping existing template-based pages */}
+            {/* Core Growth Solutions Routes */}
             <Route path="growth-solutions/performance-marketing" element={<PerformanceMarketing />} />
             <Route path="growth-solutions/seo" element={<SEO />} />
             <Route path="growth-solutions/social-media" element={<SocialMedia />} />
             <Route path="growth-solutions/email-marketing" element={<EmailMarketing />} />
+            <Route path="growth-solutions/creative-solutions" element={<CreativeSolutions />} />
+            <Route path="growth-solutions/conversion-optimization" element={<ConversionOptimization />} />
+            <Route path="growth-solutions/website-solutions" element={<WebsiteSolutions />} />
             
             {/* Specialized Growth Solutions Routes */}
             <Route path="specialized-growth-solutions/analytics-tracking" element={<AnalyticsTracking />} />
