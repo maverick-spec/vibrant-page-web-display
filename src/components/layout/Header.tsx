@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -69,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
             { name: 'Process & Workflow Automation', href: '/strategic-solutions/process-automation' },
             { name: 'Digital Systems Enablement', href: '/strategic-solutions/digital-systems-enablement' },
             { name: 'Custom Solution Engineering', href: '/strategic-solutions/custom-solution-engineering' },
-            { name: 'Enterprise Evolution & Strategic Transformation', href: '/strategic-solutions/enterprise-evolution' },
+            { name: 'Enterprise Evolution & Strategic Transformation', href: '/strategic-solutions/enterprise-evolution-strategic-transformation' },
           ]
         },
         {
@@ -153,8 +152,8 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border transition-all duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 relative">
+      <div className="container mx-auto px-2 sm:px-4">
+        <div className="flex items-center justify-between h-14 sm:h-16 relative">
           {/* Logo */}
           <button 
             onClick={handleLogoClick}
@@ -167,7 +166,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
             />
           </button>
 
-          <nav className="hidden lg:flex items-center space-x-8" ref={dropdownRef}>
+          <nav className="hidden lg:flex items-center space-x-6" ref={dropdownRef}>
             {navigation.map((item) => (
               <div key={item.name} className="relative">
                 {item.hasDropdown ? (
@@ -198,7 +197,11 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: 'easeOut' }}
-                          className="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden"
+                          className={`absolute mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden ${
+                            item.name === 'Strategic Solutions' 
+                              ? 'right-(-100px) transform translate-x-80' 
+                              : 'left-1/2 transform -translate-x-1/2'
+                          }`}
                           style={{ width: '640px' }}
                           onMouseEnter={clearDropdownTimeout}
                           onMouseLeave={handleMouseLeave}
@@ -270,14 +273,14 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
           </nav>
 
           {/* Right side buttons */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="flex items-center space-x-1">
               <Switch
                 checked={isDarkMode}
                 setChecked={toggleDarkMode}
               />
             </div>
-            <Button asChild size="sm" className="hidden sm:inline-flex">
+            <Button asChild size="sm" className="h-8 text-xs px-3 hidden sm:inline-flex">
               <Link to="/contact">Get Started</Link>
             </Button>
             

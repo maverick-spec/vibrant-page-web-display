@@ -97,23 +97,23 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px */
-    padding-right: 1rem; /* 16px */
+    padding-left: 0.75rem; /* 12px */
+    padding-right: 0.75rem; /* 12px */
   }
   
   @media (min-width: 640px) {
     .container {
       max-width: 640px;
-      padding-left: 1.5rem; /* 24px */
-      padding-right: 1.5rem; /* 24px */
+      padding-left: 1rem; /* 16px */
+      padding-right: 1rem; /* 16px */
     }
   }
   
   @media (min-width: 768px) {
     .container {
       max-width: 768px;
-      padding-left: 2rem; /* 32px */
-      padding-right: 2rem; /* 32px */
+      padding-left: 1.5rem; /* 24px */
+      padding-right: 1.5rem; /* 24px */
     }
   }
   
@@ -140,88 +140,86 @@
   /* Mobile-first spacing adjustments */
   @media (max-width: 640px) {
     .section-padding {
-      padding-top: 1.5rem !important; /* 24px */
-      padding-bottom: 1.5rem !important; /* 24px */
-    }
-    
-    .section-padding-lg {
       padding-top: 2rem !important; /* 32px */
       padding-bottom: 2rem !important; /* 32px */
     }
     
+    .section-padding-lg {
+      padding-top: 3rem !important; /* 48px */
+      padding-bottom: 3rem !important; /* 48px */
+    }
+    
     h1 {
-      font-size: 1.875rem !important; /* 30px */
-      line-height: 2.25rem !important;
-    }
-    
-    h2 {
-      font-size: 1.5rem !important; /* 24px */
-      line-height: 2rem !important;
-    }
-    
-    .text-6xl {
       font-size: 2rem !important; /* 32px */
       line-height: 2.25rem !important;
     }
     
+    h2 {
+      font-size: 1.75rem !important; /* 28px */
+      line-height: 2rem !important;
+    }
+    
+    .text-6xl {
+      font-size: 2.25rem !important; /* 36px */
+      line-height: 2.5rem !important;
+    }
+    
     .text-5xl {
-      font-size: 1.875rem !important; /* 30px */
+      font-size: 2rem !important; /* 32px */
       line-height: 2.25rem !important;
     }
     
     .text-4xl {
+      font-size: 1.875rem !important; /* 30px */
+      line-height: 2.25rem !important;
+    }
+    
+    .text-3xl {
       font-size: 1.5rem !important; /* 24px */
       line-height: 2rem !important;
     }
     
-    .text-3xl {
-      font-size: 1.25rem !important; /* 20px */
-      line-height: 1.75rem !important;
-    }
-    
     /* Reduce padding and margins on mobile */
     .py-24 {
+      padding-top: 2rem !important;
+      padding-bottom: 2rem !important;
+    }
+    
+    .py-16 {
       padding-top: 1.5rem !important;
       padding-bottom: 1.5rem !important;
     }
     
-    .py-16 {
+    .py-12 {
       padding-top: 1rem !important;
       padding-bottom: 1rem !important;
     }
     
-    .py-12 {
-      padding-top: 0.75rem !important;
-      padding-bottom: 0.75rem !important;
-    }
-    
     .mb-16 {
-      margin-bottom: 1rem !important;
+      margin-bottom: 1.5rem !important;
     }
     
     .mb-12 {
-      margin-bottom: 0.75rem !important;
+      margin-bottom: 1rem !important;
     }
     
     .mb-8 {
-      margin-bottom: 0.5rem !important;
+      margin-bottom: 0.75rem !important;
     }
     
     .gap-12 {
-      gap: 0.75rem !important;
+      gap: 1rem !important;
     }
     
     .gap-8 {
-      gap: 0.5rem !important;
+      gap: 0.75rem !important;
     }
-    
-    /* Remove extra spacing */
-    .space-y-6 > :not([hidden]) ~ :not([hidden]) {
-      margin-top: 1rem !important;
-    }
-    
-    .space-y-4 > :not([hidden]) ~ :not([hidden]) {
-      margin-top: 0.75rem !important;
+  }
+  
+  /* Smooth transitions for mobile interactions */
+  @media (max-width: 1024px) {
+    * {
+      transition: all 0.2s ease-in-out;
     }
   }
   
@@ -240,23 +238,7 @@
     /* Ensure proper touch targets */
     button, a {
       min-height: 44px;
-    }
-    
-    /* Remove extra whitespace */
-    * {
-      overflow-wrap: break-word;
-    }
-  }
-  
-  /* Ensure no unnecessary margins/padding */
-  @media (max-width: 1024px) {
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    
-    .container {
-      margin: 0 auto;
+      min-width: 44px;
     }
   }
 }
