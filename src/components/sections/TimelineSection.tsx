@@ -1,389 +1,213 @@
-"use client"
-import { useEffect, useState, useRef } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { DollarSign, Settings, Shield, Target, ChevronRight } from "lucide-react"
 
-export default function TimelineSection() {
-  const [activeSection, setActiveSection] = useState("growth-solutions")
-  const [isNavFixed, setIsNavFixed] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const strategicRef = useRef<HTMLHeadingElement>(null);
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { CheckCircle, Zap, Target } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .map((entry) => entry.target);
+interface TimelineItem {
+  title: string;
+  description: string;
+  details: string[];
+}
 
-        if (visibleSections.length > 0) {
-          visibleSections.sort(
-            (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
-          );
-          setActiveSection(visibleSections[0].id);
+interface SolutionTab {
+  id: string;
+  title: string;
+  icon: React.ElementType;
+  items: TimelineItem[];
+}
+
+const TimelineSection: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('growth');
+
+  const solutionTabs: SolutionTab[] = [
+    {
+      id: 'growth',
+      title: 'Growth Solutions',
+      icon: Zap,
+      items: [
+        {
+          title: 'Performance Marketing & Paid Media',
+          description: 'Drive qualified traffic and maximize ROI through strategic paid advertising campaigns across multiple platforms.',
+          details: [
+            'Multi-platform campaign management',
+            'Advanced audience targeting and segmentation',
+            'Real-time performance optimization',
+            'Comprehensive ROI tracking and reporting'
+          ]
+        },
+        {
+          title: 'Social Media Marketing & Brand Engagement',
+          description: 'Build meaningful connections with your audience through strategic social media presence and community engagement.',
+          details: [
+            'Platform-specific content strategies',
+            'Community management and engagement',
+            'Influencer partnership coordination',
+            'Social media analytics and insights'
+          ]
+        },
+        {
+          title: 'Email Marketing & Marketing Automation',
+          description: 'Nurture leads and retain customers through personalized, automated email marketing campaigns.',
+          details: [
+            'Automated drip campaigns',
+            'Personalization and segmentation',
+            'A/B testing and optimization',
+            'Customer lifecycle automation'
+          ]
+        },
+        {
+          title: 'Conversion Rate Optimization',
+          description: 'Optimize your website and landing pages to convert more visitors into customers.',
+          details: [
+            'User experience analysis',
+            'A/B testing implementation',
+            'Landing page optimization',
+            'Conversion funnel analysis'
+          ]
         }
-      },
-      {
-        rootMargin: "0px 0px -40% 0px",
-        threshold: 0.2,
-      }
-    );
-
-    const sectionsToObserve = document.querySelectorAll("section[id]");
-    sectionsToObserve.forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      setIsNavFixed(rect.top <= 80 && rect.bottom > 120);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    let element: HTMLElement | null = null;
-    if (id === "strategic-solutions" && strategicRef.current) {
-      element = strategicRef.current;
-    } else {
-      element = document.getElementById(id);
+      ]
+    },
+    {
+      id: 'strategic',
+      title: 'Strategic Solutions',
+      icon: Target,
+      items: [
+        {
+          title: 'Process & Workflow Automation',
+          description: 'Streamline operations and eliminate manual work through intelligent automation solutions.',
+          details: [
+            'Workflow mapping and optimization',
+            'Automated task routing',
+            'Integration between systems',
+            'Performance monitoring and reporting'
+          ]
+        },
+        {
+          title: 'Digital Systems Enablement',
+          description: 'Empower your team with the right tools and systems to scale efficiently.',
+          details: [
+            'System architecture planning',
+            'Technology stack optimization',
+            'Data integration solutions',
+            'User training and adoption'
+          ]
+        },
+        {
+          title: 'Custom Solution Engineering',
+          description: 'Build tailored solutions that address your unique business challenges and requirements.',
+          details: [
+            'Custom application development',
+            'API integrations',
+            'Database design and optimization',
+            'Scalable architecture planning'
+          ]
+        },
+        {
+          title: 'Enterprise Evolution & Strategic Transformation',
+          description: 'Guide your organization through large-scale transformation initiatives.',
+          details: [
+            'Strategic planning and roadmapping',
+            'Change management support',
+            'Technology migration planning',
+            'Performance measurement frameworks'
+          ]
+        }
+      ]
     }
-    if (element) {
-      const headerOffset = 160;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-    }
-  };
+  ];
 
-  const sections = [
-    { id: "growth-solutions", title: "Growth Solutions" },
-    { id: "strategic-solutions", title: "Strategic Solutions" },
-  ]
-
-  const location = useLocation();
-  const showNav = location.pathname === "/";
+  const activeTabData = solutionTabs.find(tab => tab.id === activeTab);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section at the top */}
-      <div className="bg-background py-12 sm:py-16">
-        <div className="container">
-          <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-4 sm:mb-6 text-center text-primary">Our Solutions</h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-center max-w-4xl mx-auto">
-            Whether you're launching something new or optimizing what's already working, we deliver what your business
-            needs to grow, adapt, and move faster.
+    <section className="py-12 sm:py-16 md:py-20 bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-8 sm:mb-12"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
+            Our Solutions Timeline
+          </h2>
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+            Explore our comprehensive approach to driving growth and operational excellence
           </p>
-        </div>
-      </div>
+        </motion.div>
 
-      {/* LEFT NAVIGATION - ONLY INSIDE TIMELINESECTION, NOT GLOBAL */}
-      <div ref={sectionRef} className="container py-8">
-        <div className="flex flex-row items-start pt-4">
-          {/* Left Nav - NO ANIMATIONS */}
-          {showNav && (
-            <div
-              className={"hidden lg:flex flex-col w-[220px] mr-12 fixed z-40"}
-              style={isNavFixed ? { left: 32, top: 100 } : {}}
-            >
-              {sections.map((section) => (
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Tab Navigation - Left Side */}
+          <div className="lg:w-1/4 flex lg:flex-col gap-2">
+            {solutionTabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
                 <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className={cn(
-                    "text-xl font-bold w-[220px] text-left py-3 px-4 rounded-lg whitespace-nowrap",
-                    activeSection === section.id
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground"
-                  )}
-                  style={{ boxShadow: 'none', border: 'none', background: activeSection === section.id ? 'rgba(var(--primary), 0.1)' : 'none' }}
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-3 p-4 rounded-lg text-left transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'bg-primary text-primary-foreground shadow-lg'
+                      : 'bg-card hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                  }`}
                 >
-                  {section.title}
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium text-sm sm:text-base">{tab.title}</span>
                 </button>
-              ))}
-            </div>
-          )}
-          {/* Main Content */}
-          <div className={isNavFixed ? "flex-1 lg:ml-[220px] pt-0" : "flex-1 pt-0"}>
-            <main className="max-w-none">
-              {/* Growth Solutions Section */}
-              <h2 className="text-2xl sm:text-3xl font-bold mb-0 text-primary">Growth Solutions</h2>
-              <section id="growth-solutions" className="py-0 mb-12 sm:mb-16 mt-0">
-                <p className="mb-6 mt-0 text-muted-foreground leading-relaxed">
-                  You need more customers, more engagement, and more momentum. If your priority is to attract the right
-                  audience, convert consistently, and expand your market reach, our Growth Solutions are built for you. We
-                  deliver high-performance marketing strategy and execution that engineers demand, amplifies brand value,
-                  and accelerates customer acquisition.
-                </p>
+              );
+            })}
+          </div>
 
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Core Growth Solutions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
-                  {[
-                    {
-                      link: "/growth-solutions/performance-marketing",
-                      icon: "/Growth Solutions Icons/PerformanceMarketing&PaidMedia.png",
-                      title: "Performance Marketing & Paid Media",
-                      desc: "High-ROI ads that convert."
-                    },
-                    {
-                      link: "/growth-solutions/social-media-marketing",
-                      icon: "/Growth Solutions Icons/Social Media Marketing & Brand Engagement.png",
-                      title: "Social Media Marketing & Brand Engagement",
-                      desc: "Build audience, spark action."
-                    },
-                    {
-                      link: "/growth-solutions/email-marketing",
-                      icon: "/Growth Solutions Icons/Email Marketing & Marketing Automation.png",
-                      title: "Email Marketing & Marketing Automation",
-                      desc: "Automate nurture, drive loyalty."
-                    },
-                    {
-                      link: "/growth-solutions/creative-solutions",
-                      icon: "/Growth Solutions Icons/Creative Solutions.png",
-                      title: "Creative Solutions",
-                      desc: "Visuals that get results."
-                    },
-                    {
-                      link: "/growth-solutions/conversion-optimization",
-                      icon: "/Growth Solutions Icons/Conversion Rate Optimization.png",
-                      title: "Conversion Rate Optimization (CRO)",
-                      desc: "Test. Refine. Convert more."
-                    },
-                    {
-                      link: "/growth-solutions/seo-website-growth",
-                      icon: "/Growth Solutions Icons/Search Engine Optimization (SEO) & Website Growth.png",
-                      title: "Search Engine Optimization (SEO) & Website Growth",
-                      desc: "Rank higher. Grow faster."
-                    },
-                    {
-                      link: "/growth-solutions/website-solutions",
-                      icon: "/Growth Solutions Icons/Website Solutions.png",
-                      title: "Website Solutions",
-                      desc: "Seamless, scalable, conversion-ready."
-                    }
-                  ].map((item, index) => (
-                    <Link
+          {/* Content Area - Right Side */}
+          <div className="lg:w-3/4">
+            <AnimatePresence mode="wait">
+              {activeTabData && (
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  {activeTabData.items.map((item, index) => (
+                    <motion.div
                       key={index}
-                      to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
-                        <img
-                          src={item.icon}
-                          alt={item.title}
-                          className="w-10 h-10 object-contain dark:invert"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
-                      </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
-                    </Link>
+                      <Card className="hover:shadow-lg transition-all duration-300">
+                        <CardContent className="p-6">
+                          <h3 className="text-xl font-bold text-foreground mb-3">
+                            {item.title}
+                          </h3>
+                          <p className="text-muted-foreground mb-4 leading-relaxed">
+                            {item.description}
+                          </p>
+                          <ul className="space-y-2">
+                            {item.details.map((detail, detailIndex) => (
+                              <li key={detailIndex} className="flex items-start gap-2">
+                                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                                <span className="text-sm text-foreground">{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
                   ))}
-                </div>
-
-                
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Specialized Growth Solutions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
-                  {[
-                    {
-                      link: "/specialized-growth-solutions/audit-insights",
-                      icon: "/Specialized Growth Solutions Icons/Deep Dive Audit & Strategic Insights.png",
-                      title: "Deep Dive Audit & Strategic Insights",
-                      desc: "Clarity through expert analysis."
-                    },
-                    {
-                      link: "/specialized-growth-solutions/analytics-tracking",
-                      icon: "/Specialized Growth Solutions Icons/Analytics and Event Tracking Setup.png",
-                      title: "Analytics and Event Tracking Setup",
-                      desc: "Track what matters, measure what works."
-                    },
-                    {
-                      link: "/specialized-growth-solutions/lead-generation",
-                      icon: "/Specialized Growth Solutions Icons/Lead Generation & Funnel Strategy.png",
-                      title: "Lead Generation & Funnel Strategy",
-                      desc: "Build funnels that convert."
-                    },
-                    {
-                      link: "/specialized-growth-solutions/brand-architecture",
-                      icon: "/Specialized Growth Solutions Icons/Brand Architecture & Strategy.png",
-                      title: "Brand Architecture & Strategy",
-                      desc: "Define, differentiate, scale."
-                    },
-                    {
-                      link: "/specialized-growth-solutions/content-strategy",
-                      icon: "/Specialized Growth Solutions Icons/Content Strategy & Planning.png",
-                      title: "Content Strategy & Marketing",
-                      desc: "Create content that drives action."
-                    },
-                    {
-                      link: "/specialized-growth-solutions/ai-content",
-                      icon: "/Specialized Growth Solutions Icons/AI-Accelerated Content Production Pipelines.png",
-                      title: "AI-Accelerated Content Production Pipelines",
-                      desc: "Scale content with AI precision."
-                    },
-                    {
-                      link: "/specialized-growth-solutions/executive-branding",
-                      icon: "/Specialized Growth Solutions Icons/Executive Personal Branding & LinkedIn Marketing.png",
-                      title: "Executive Personal Branding & LinkedIn Marketing",
-                      desc: "Elevate presence, grow influence."
-                    }
-                  ].map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
-                    >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
-                        <img
-                          src={item.icon}
-                          alt={item.title}
-                          className="w-10 h-10 object-contain dark:invert"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
-                      </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
-                    </Link>
-                  ))}
-                </div>
-
-                <div className="text-center">
-                <Button className="font-semibold text-lg mb-4" size="lg" asChild>
-                    <a href="/contact">Ready to move faster? Let's talk.</a>
-                  </Button>
-                </div>
-              </section>
-
-              {/* Strategic Solutions Section */}
-              <h2 ref={strategicRef} className="text-2xl sm:text-3xl font-bold mb-0 text-primary">Strategic Solutions</h2>
-              <section id="strategic-solutions" className="py-0 mb-12 sm:mb-16 mt-0">
-                <p className="mb-6 mt-0 text-muted-foreground leading-relaxed">
-                  You need to improve efficiency, automate intelligently, and ensure operations scale without chaos. If
-                  you're navigating operational bottlenecks, automation gaps, or complex scaling challenges, our Strategic
-                  Solutions offer high-ROI tailored strategy and implementations that are built for precision,
-                  scalability, and efficiency. From workflow orchestration to platform optimization, we help you execute
-                  at the next level with minimal disruption.
-                </p>
-
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Core Strategic Solutions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
-                  {[
-                    {
-                      link: "/strategic-solutions/process-automation",
-                      icon: "/Strategic Solutions Icons/Process & Workflow Automation.png",
-                      title: "Process & Workflow Automation",
-                      desc: "Automate execution. Eliminate friction."
-                    },
-                    {
-                      link: "/strategic-solutions/digital-systems-enablement",
-                      icon: "/Strategic Solutions Icons/Digital Systems Enablement.png",
-                      title: "Digital Systems Enablement",
-                      desc: "Optimize platforms. Empower teams."
-                    },
-                    {
-                      link: "/strategic-solutions/custom-solution-engineering",
-                      icon: "/Strategic Solutions Icons/Custom Solution Engineering.png",
-                      title: "Custom Solution Engineering",
-                      desc: "Solve complex. Deliver fast."
-                    },
-                    {
-                      link: "/strategic-solutions/enterprise-evolution-strategic-transformation",
-                      icon: "/Strategic Solutions Icons/Enterprise Evolution & Strategic Transformation.png",
-                      title: "Enterprise Evolution & Strategic Transformation",
-                      desc: "Reshape. Scale. Future-proof."
-                    }
-                  ].map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
-                    >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
-                        <img
-                          src={item.icon}
-                          alt={item.title}
-                          className="w-10 h-10 object-contain dark:invert"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
-                      </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
-                    </Link>
-                  ))}
-                </div>
-
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Solutions By Function</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
-                  {[
-                    {
-                      title: "Finance",
-                      desc: "Automate reporting. Accelerate reconciliation.",
-                      icon: DollarSign,
-                      link: "/strategic-solutions/finance-operations"
-                    },
-                    {
-                      title: "Operations",
-                      desc: "Unblock execution. Speed up critical workflows.",
-                      icon: Settings,
-                      link: "/strategic-solutions/operations"
-                    },
-                    {
-                      title: "Compliance & Governance",
-                      desc: "Reduce risk. Ensure audit-ready control.",
-                      icon: Shield,
-                      link: "/strategic-solutions/compliance-governance"
-                    },
-                    {
-                      title: "Cross-Functional Leadership",
-                      desc: "Align departments. Orchestrate complex delivery.",
-                      icon: Target,
-                      link: "/strategic-solutions/cross-functional-leadership"
-                    }
-                  ].map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
-                    >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
-                        <item.icon className="w-6 h-6" />
-                      </div>
-                      <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
-                      </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
-                    </Link>
-                  ))}
-                </div>
-
-                <div className="text-center">
-                  <Button className="font-semibold text-lg mb-4" size="lg" asChild>
-                    <a href="/contact">Ready to move faster? Let's talk.</a>
-                  </Button>
-                </div>
-              </section>
-            </main>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+    </section>
+  );
+};
+
+// Need to import AnimatePresence
+import { AnimatePresence } from 'framer-motion';
+
+export default TimelineSection;
