@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { motion, AnimatePresence } from 'framer-motion';
 import LogoTeal from '/Logo-Teal.png';
+import { AnimatedUnderline } from "@/components/ui/animated-underline";
 
 interface HeaderProps {
   isDarkMode: boolean;
-  toggleDarkMode: () => void;
+  toggleDarkMode: (checked: boolean) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
@@ -153,8 +154,8 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border transition-all duration-300">
       <div className="container mx-auto px-2 sm:px-4">
-        <div className="flex items-center justify-between h-14 sm:h-16 relative">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-14 sm:h-16 relative px-2 w-full max-w-6xl mx-auto">
+          {/* Left: Logo */}
           <button 
             onClick={handleLogoClick}
             className="flex items-center cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
@@ -166,7 +167,8 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
             />
           </button>
 
-          <nav className="hidden lg:flex items-center space-x-6" ref={dropdownRef}>
+          {/* Center: Navigation (desktop only) */}
+          <nav className="hidden lg:flex flex-1 items-center justify-center space-x-6" ref={dropdownRef}>
             {navigation.map((item) => (
               <div key={item.name} className="relative">
                 {item.hasDropdown ? (
@@ -261,34 +263,31 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`text-sm font-medium transition-colors hover:text-primary whitespace-nowrap py-2 ${
-                      isActive(item.href) ? 'text-primary' : 'text-foreground/80'
-                    }`}
+                    className={"py-2"}
                   >
-                    {item.name}
+                    <AnimatedUnderline active={isActive(item.href)}>{item.name}</AnimatedUnderline>
                   </Link>
                 )}
               </div>
             ))}
           </nav>
 
-          {/* Right side buttons */}
-          <div className="flex items-center space-x-1 sm:space-x-2">
-            <div className="flex items-center space-x-1">
-              <Switch
-                checked={isDarkMode}
-                setChecked={toggleDarkMode}
-              />
-            </div>
-            <Button asChild size="sm" className="h-8 text-xs px-3 hidden sm:inline-flex">
+          {/* Right: Dark mode toggle and Get Started button (desktop only) */}
+          <div className="hidden lg:flex items-center space-x-2">
+            <Switch checked={isDarkMode} setChecked={toggleDarkMode} />
+            <Button asChild size="sm" className="h-8 text-xs px-3">
               <Link to="/contact">Get Started</Link>
             </Button>
-            
+          </div>
+
+          {/* Hamburger menu button on mobile */}
+          <div className="flex items-center lg:hidden ml-auto">
+            <Switch checked={isDarkMode} setChecked={toggleDarkMode} />
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="w-8 h-8 p-0 lg:hidden"
+              className="w-8 h-8 p-0 ml-1"
             >
               {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
@@ -303,11 +302,11 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden border-t border-border bg-background max-h-[70vh] overflow-y-auto"
+              className="lg:hidden fixed top-[56px] left-1/2 -translate-x-1/2 w-full max-w-sm border border-border bg-background max-h-[70vh] overflow-y-auto rounded-b-xl shadow-2xl z-[100] flex flex-col px-2"
             >
-              <div className="py-4 space-y-2">
+              <div className="py-4 space-y-3 flex flex-col">
                 {navigation.map((item) => (
-                  <div key={item.name}>
+                  <div key={item.name} className="flex flex-col">
                     {item.hasDropdown ? (
                       <div className="space-y-2">
                         <Link
@@ -317,9 +316,9 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                         >
                           {item.name}
                         </Link>
-                        
+                        <div className="border-l-2 border-primary/10 ml-2 pl-2">
                         {item.sections?.map((section) => (
-                          <div key={section.title} className="ml-4 space-y-1">
+                          <div key={section.title} className="space-y-1 mt-1">
                             <Link
                               to={section.href}
                               onClick={() => setIsMenuOpen(false)}
@@ -327,18 +326,21 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                             >
                               {section.title}
                             </Link>
+                            <div className="flex flex-col ml-2">
                             {section.items?.map((subItem) => (
                               <Link
                                 key={subItem.name}
                                 to={subItem.href}
                                 onClick={() => setIsMenuOpen(false)}
-                                className="block px-6 py-1.5 text-xs text-muted-foreground hover:text-primary transition-colors hover:bg-muted/30 rounded ml-2"
+                                className="block px-5 py-1.5 text-xs text-muted-foreground hover:text-primary transition-colors hover:bg-muted/30 rounded"
                               >
                                 {subItem.name}
                               </Link>
                             ))}
+                            </div>
                           </div>
                         ))}
+                        </div>
                       </div>
                     ) : (
                       <Link

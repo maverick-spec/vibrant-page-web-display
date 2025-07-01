@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Target, Zap, Lightbulb } from 'lucide-react';
@@ -31,9 +30,9 @@ const AboutSection: React.FC = () => {
 
   return (
     <section className="section-padding-lg bg-background">
-      <div className="container">
+      <div className="max-w-6xl mx-auto px-2 sm:px-4">
         {/* About Us Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-24 lg:justify-between">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-24 lg:justify-between gap-y-8">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -42,10 +41,10 @@ const AboutSection: React.FC = () => {
             viewport={{ once: true }}
             className="lg:ml-0 text-left"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6 text-left text-primary">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6 text-left text-primary px-2">
               About <span className="text-primary">Us</span>
             </h2>
-            <p className="text-base sm:text-lg text-foreground mb-4 sm:mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground mb-4 sm:mb-6 leading-relaxed px-2">
               The right solution at the right time can change everything. We make the right solutions happen right now.
             </p>
             <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6 leading-relaxed">

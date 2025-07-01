@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -14,6 +14,7 @@ import StrategicSolutions from '@/pages/StrategicSolutions';
 import CoreGrowthSolutions from '@/pages/CoreGrowthSolutions';
 import SpecializedGrowthSolutions from '@/pages/SpecializedGrowthSolutions';
 import SolvePathFramework from '@/pages/about/SolvePathFramework';
+import Preloader from '@/components/layout/Preload Screen';
 
 // Core Growth Solutions
 import PerformanceMarketing from '@/pages/growth-solutions/PerformanceMarketing';
@@ -56,6 +57,9 @@ const queryClient = new QueryClient({
 });
 
 const App: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
+
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>

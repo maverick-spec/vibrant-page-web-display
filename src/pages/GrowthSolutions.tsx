@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, Users, Mail, Palette, Target, Search, Globe, ArrowRight, Zap, CheckCircle, Star, SquareArrowOutUpRight } from 'lucide-react';
+import { Users, Mail, Palette, Target, Search, Globe, ArrowRight, Zap, CheckCircle, SquareArrowOutUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { WavyBackground } from '@/components/ui/wavy-background';
@@ -10,7 +9,7 @@ import { motion } from 'framer-motion';
 
 const GrowthSolutions: React.FC = () => {
   const coreServices = [{
-    icon: TrendingUp,
+    icon: Users,
     title: 'Performance Marketing & Paid Media',
     description: 'High-ROI ads that convert. Strategic campaign management across platforms to maximize your advertising spend and drive measurable results.',
     link: '/growth-solutions/performance-marketing'
@@ -70,7 +69,11 @@ const GrowthSolutions: React.FC = () => {
               amplifies brand value, and accelerates customer acquisition.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <StartGrowingForm title="Ready to Accelerate Growth?" description="Tell us about your growth goals and we'll create a custom strategy for your business." buttonText="Start Growing Today" />
+              <StartGrowingForm 
+              title="Ready to Accelerate Growth?" 
+              description="Tell us about your growth goals and we'll create a custom strategy for your business." 
+              buttonText="Start Growing Today" 
+            />
               <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
                 <Link to="/strategic-solutions">View Strategic Solutions</Link>
               </Button>
@@ -81,7 +84,7 @@ const GrowthSolutions: React.FC = () => {
 
       {/* Core Services */}
       <section className="py-16 sm:py-20 md:py-24 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <div className="max-w-6xl mx-auto px-2 sm:px-4">
           <motion.div initial={{
           opacity: 0,
           y: 30
@@ -94,12 +97,12 @@ const GrowthSolutions: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6 text-primary px-2">
               Our Core Growth Services
             </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
               Comprehensive marketing solutions designed to drive measurable growth
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 gap-y-8">
             {coreServices.map((service, index) => (
               <motion.div
                 key={service.title}
@@ -109,7 +112,7 @@ const GrowthSolutions: React.FC = () => {
                 className="px-2"
               >
                 <Link to={service.link}>
-                  <Card className="h-full group cursor-pointer relative">
+                  <Card className="h-full flex flex-col group cursor-pointer relative">
                     <SquareArrowOutUpRight 
                       className="absolute top-3 sm:top-4 right-3 sm:right-4 w-5 h-5 sm:w-6 sm:h-6 text-primary/80 drop-shadow-lg animate-pulse pointer-events-none select-none"
                       aria-label="More info"
@@ -122,11 +125,13 @@ const GrowthSolutions: React.FC = () => {
                         {service.title}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
-                        {service.description}
-                      </p>
-                      <Button asChild className="w-full">
+                    <CardContent className="flex flex-col flex-1 justify-between">
+                      <div>
+                        <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
+                          {service.description}
+                        </p>
+                      </div>
+                      <Button asChild className="w-full mt-4">
                         <Link to={service.link}>
                           Learn More
                         </Link>

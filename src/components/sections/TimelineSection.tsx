@@ -80,47 +80,50 @@ export default function TimelineSection() {
       {/* Hero Section at the top */}
       <div className="bg-background py-12 sm:py-16">
         <div className="container">
-          <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-4 sm:mb-6 text-center text-primary">Our Solutions</h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-center max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-4 sm:mb-6 text-left text-primary px-2">Our Solutions</h1>
+          <p className="text-base sm:text-lg md:text-2xl text-left max-w-4xl px-2">
             Whether you're launching something new or optimizing what's already working, we deliver what your business
             needs to grow, adapt, and move faster.
           </p>
         </div>
       </div>
 
-      {/* LEFT NAVIGATION - ONLY INSIDE TIMELINESECTION, NOT GLOBAL */}
-      <div ref={sectionRef} className="container py-8">
+      {/* LEFT NAVIGATION - STICKY WITHIN THIS SECTION ONLY */}
+      <div ref={sectionRef} className="container py-8 relative">
         <div className="flex flex-row items-start pt-4">
-          {/* Left Nav - NO ANIMATIONS */}
+          {/* Sticky Left Nav with Both Items - Only sticky within this container */}
           {showNav && (
-            <div
-              className={"hidden lg:flex flex-col w-[220px] mr-12 fixed z-40"}
-              style={isNavFixed ? { left: 32, top: 100 } : {}}
+            <div 
+              className={cn(
+                "hidden lg:flex flex-col w-[280px] mr-8 space-y-4",
+                isNavFixed ? "fixed top-24 z-50" : "sticky top-24 z-50"
+              )}
+              style={isNavFixed ? { left: '6rem' } : { marginLeft: '4rem' }}
             >
               {sections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
                   className={cn(
-                    "text-xl font-bold w-[220px] text-left py-3 px-4 rounded-lg whitespace-nowrap",
+                    "text-xl font-bold w-[280px] text-left whitespace-nowrap transition-colors",
                     activeSection === section.id
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground"
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-primary"
                   )}
-                  style={{ boxShadow: 'none', border: 'none', background: activeSection === section.id ? 'rgba(var(--primary), 0.1)' : 'none' }}
                 >
                   {section.title}
                 </button>
               ))}
             </div>
           )}
+          
           {/* Main Content */}
-          <div className={isNavFixed ? "flex-1 lg:ml-[220px] pt-0" : "flex-1 pt-0"}>
+          <div className={cn("flex-1", showNav && isNavFixed ? "ml-80" : showNav ? "ml-0" : "")}>
             <main className="max-w-none">
               {/* Growth Solutions Section */}
-              <h2 className="text-2xl sm:text-3xl font-bold mb-0 text-primary">Growth Solutions</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-0 mb-2 text-primary px-2">Growth Solutions</h2>
               <section id="growth-solutions" className="py-0 mb-12 sm:mb-16 mt-0">
-                <p className="mb-6 mt-0 text-muted-foreground leading-relaxed">
+                <p className="mb-6 mt-0 text-muted-foreground leading-relaxed px-2">
                   You need more customers, more engagement, and more momentum. If your priority is to attract the right
                   audience, convert consistently, and expand your market reach, our Growth Solutions are built for you. We
                   deliver high-performance marketing strategy and execution that engineers demand, amplifies brand value,
@@ -270,7 +273,7 @@ export default function TimelineSection() {
               </section>
 
               {/* Strategic Solutions Section */}
-              <h2 ref={strategicRef} className="text-2xl sm:text-3xl font-bold mb-0 text-primary">Strategic Solutions</h2>
+              <h2 ref={strategicRef} className="text-2xl sm:text-3xl md:text-4xl font-bold mt-0 mb-2 text-primary">Strategic Solutions</h2>
               <section id="strategic-solutions" className="py-0 mb-12 sm:mb-16 mt-0">
                 <p className="mb-6 mt-0 text-muted-foreground leading-relaxed">
                   You need to improve efficiency, automate intelligently, and ensure operations scale without chaos. If

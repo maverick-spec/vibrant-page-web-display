@@ -1,4 +1,3 @@
-
 import React, { ReactNode, useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
@@ -11,32 +10,29 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // On mount, read from localStorage
   useEffect(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark') setIsDarkMode(true);
+    else if (stored === 'light') setIsDarkMode(false);
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setIsDarkMode(true);
   }, []);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    if (!isDarkMode) {
+  // On change, update html class and localStorage
+  useEffect(() => {
+    if (isDarkMode) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
-  };
+  }, [isDarkMode]);
 
   return (
     <div className="min-h-screen flex flex-col">
       <ScrollProgress />
-      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <Header isDarkMode={isDarkMode} toggleDarkMode={setIsDarkMode} />
       <main className="flex-1">
         {children}
       </main>

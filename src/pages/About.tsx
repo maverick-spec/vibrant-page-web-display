@@ -112,10 +112,10 @@ const About: React.FC = () => {
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section with Wavy Background */}
-      <WavyBackground className="py-20 md:py-28 mt-8 md:mt-16">
+      <WavyBackground className="py-20 sm:py-28 md:py-36 mt-16 md:mt-20">
         <div className="container max-w-6xl">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-playfair text-black dark:text-white mb-6 lg:mb-8">
+            <h1 className="text-5xl md:text-6xl lg:text-6xl font-bold font-playfair text-black dark:text-white mb-6 lg:mb-8">
               We bring{' '}
               <span className="bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent drop-shadow-md text-stroke-themed">Growth</span>{' '}
               and{' '}
@@ -200,7 +200,7 @@ const About: React.FC = () => {
 
           <div className="text-center">
             <Button variant="outline" size="lg" asChild>
-              <a href="/about#solvepath">Learn More About SolvePath Framework<ArrowRight className="ml-2 w-4 h-4" /></a>
+              <a href="/about/solvepath-framework">Learn More About SolvePath Framework<ArrowRight className="ml-2 w-4 h-4" /></a>
             </Button>
           </div>
         </div>
@@ -259,17 +259,17 @@ const About: React.FC = () => {
                   <CardTitle className="text-xl font-bold text-foreground">One Creates Structure</CardTitle>
                 </CardHeader>
               </Card>
-              <Card className="text-center bg-gradient-to-br from-accent/10 to-accent/5 border-0 custom-shadow">
+              <Card className="text-center bg-gradient-to-br from-primary/10 to-primary/5 border-0 custom-shadow">
                 <CardHeader>
-                  <div className="w-16 h-16 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
-                    <Zap className="w-8 h-8 text-accent" />
+                  <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Zap className="w-8 h-8 text-primary" />
                   </div>
                   <CardTitle className="text-xl font-bold text-foreground">One Drives Momentum</CardTitle>
                 </CardHeader>
               </Card>
             </div>
             <p className="text-lg font-semibold text-foreground mt-6">
-              Both are built to generate measurable results—fast.
+              Both are built to generate measurable results — <span className="text-primary">Fast.</span>
             </p>
           </div>
         </div>
@@ -283,7 +283,8 @@ const About: React.FC = () => {
               Two Solution Families Under One Roof
             </h2>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              Our two solution families are part of the same system, two complement...
+            Our <span className="text-primary">two solution</span> families are part of the same system, <span className="text-primary">two complementary engines</span> that help businesses scale what works and fix what doesn't. That integrated approach lets us expand and evolve our offerings across both tracks without losing speed, clarity, or control.
+            As the needs of our clients have evolved, so have we. Our ability to <span className="text-primary">think strategically, execute efficiently,</span> and <span className="text-primary">adapt intelligently</span> is what keeps us relevant and makes us invaluable.
             </p>
           </div>
 

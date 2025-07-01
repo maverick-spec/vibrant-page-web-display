@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Target, Cog, Settings, Database, Shield, ArrowRight, Zap, CheckCircle, DollarSign, Users } from 'lucide-react';
@@ -87,7 +86,7 @@ const StrategicSolutions: React.FC = () => {
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
-      <WavyBackground className="py-8 md:py-12 mt-16 md:mt-20">
+      <WavyBackground className="py-20 sm:py-28 md:py-36 mt-16 md:mt-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -95,14 +94,14 @@ const StrategicSolutions: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black dark:text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-black dark:text-white sm:mb-6 px-2">
               Strategic Solutions
             </h1>
-            <p className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-black/80 dark:text-white/80 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-4">
               Technology-enhanced operational scaling that streamlines processes, automates intelligently, 
               and ensures your operations scale without chaos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <StartGrowingForm 
                 title="Ready to Scale Operations?"
                 description="Tell us about your operational challenges and we'll design solutions that drive efficiency and growth."
@@ -143,18 +142,23 @@ const StrategicSolutions: React.FC = () => {
               >
                 <Link to={service.link}>
                   <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-accent/10 to-accent/5 border-0 custom-shadow group cursor-pointer">
-                    <CardHeader>
-                      <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <service.icon className="w-8 h-8 text-accent" />
+                    <CardHeader className="pb-4">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <service.icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                       </div>
-                      <CardTitle className="text-xl font-bold text-foreground group-hover:text-accent transition-colors">
+                      <CardTitle className="text-lg sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                         {service.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
                         {service.description}
                       </p>
+                      <Button asChild className="w-full">
+                        <Link to={service.link}>
+                          Learn More
+                        </Link>
+                      </Button>
                     </CardContent>
                   </Card>
                 </Link>
@@ -191,18 +195,23 @@ const StrategicSolutions: React.FC = () => {
               >
                 <Link to={solution.link}>
                   <Card className="h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-accent/10 to-accent/5 border-0 custom-shadow group cursor-pointer">
-                    <CardHeader>
-                      <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <solution.icon className="w-8 h-8 text-accent" />
+                    <CardHeader className="pb-4">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <solution.icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                       </div>
-                      <CardTitle className="text-xl font-bold text-foreground group-hover:text-accent transition-colors">
+                      <CardTitle className="text-lg sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                         {solution.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-4 sm:mb-6">
                         {solution.description}
                       </p>
+                      <Button asChild className="w-full">
+                        <Link to={solution.link}>
+                          Learn More
+                        </Link>
+                      </Button>
                     </CardContent>
                   </Card>
                 </Link>

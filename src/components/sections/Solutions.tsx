@@ -45,7 +45,7 @@ const Solutions: React.FC = () => {
 
   return (
     <section className="py-24 bg-background">
-      <div className="container">
+      <div className="max-w-6xl mx-auto px-2 sm:px-4">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -53,17 +53,17 @@ const Solutions: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 text-primary text-2xl sm:text-3xl md:text-4xl px-2">
             Two Solution Families
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-base sm:text-lg px-2">
             Whether you're launching something new or optimizing what's already working, 
             we deliver what your business needs to grow, adapt, and move faster.
           </p>
         </motion.div>
 
         {/* Solutions Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 gap-y-8">
           {solutions.map((solution, index) => (
             <motion.div
               key={solution.title}
