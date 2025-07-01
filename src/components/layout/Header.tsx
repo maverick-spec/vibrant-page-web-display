@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
@@ -99,7 +100,6 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
     }, 100);
   };
 
-  // Clear timeout helper
   const clearDropdownTimeout = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -107,19 +107,16 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
     }
   };
 
-  // Handle click to toggle dropdown
   const handleDropdownClick = (itemName: string) => {
     clearDropdownTimeout();
     setActiveDropdown(activeDropdown === itemName ? null : itemName);
   };
 
-  // Handle mouse enter with delay
   const handleMouseEnter = (itemName: string) => {
     clearDropdownTimeout();
     setActiveDropdown(itemName);
   };
 
-  // Handle mouse leave with delay
   const handleMouseLeave = () => {
     clearDropdownTimeout();
     timeoutRef.current = setTimeout(() => {
@@ -127,7 +124,6 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
     }, 150);
   };
 
-  // Handle click outside and escape key
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -180,8 +176,8 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                     <button
                       onClick={() => handleDropdownClick(item.name)}
                       onMouseEnter={() => handleMouseEnter(item.name)}
-                      className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary whitespace-nowrap py-2 ${
-                        isActive(item.href) ? 'text-primary' : 'text-foreground/80'
+                      className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-white whitespace-nowrap py-2 ${
+                        isActive(item.href) ? 'text-primary' : 'text-primary'
                       }`}
                     >
                       <span>{item.name}</span>
@@ -199,11 +195,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: 'easeOut' }}
-                          className={`absolute mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden ${
-                            item.name === 'Strategic Solutions' 
-                              ? 'right-(-100px) transform translate-x-80' 
-                              : 'left-1/2 transform -translate-x-1/2'
-                          }`}
+                          className="absolute mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden left-1/2 transform -translate-x-1/2"
                           style={{ width: '640px' }}
                           onMouseEnter={clearDropdownTimeout}
                           onMouseLeave={handleMouseLeave}
@@ -294,17 +286,17 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu - Full Screen */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden fixed top-[56px] left-1/2 -translate-x-1/2 w-full max-w-sm border border-border bg-background max-h-[70vh] overflow-y-auto rounded-b-xl shadow-2xl z-[100] flex flex-col px-2"
+              className="lg:hidden fixed inset-0 top-[56px] bg-background z-[100] overflow-y-auto"
             >
-              <div className="py-4 space-y-3 flex flex-col">
+              <div className="p-4 space-y-3 min-h-full">
                 {navigation.map((item) => (
                   <div key={item.name} className="flex flex-col">
                     {item.hasDropdown ? (
@@ -312,7 +304,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                         <Link
                           to={item.href}
                           onClick={() => setIsMenuOpen(false)}
-                          className="block px-4 py-3 text-sm font-semibold transition-colors hover:text-primary text-foreground bg-muted/30 rounded-lg mx-2"
+                          className="block px-4 py-3 text-sm font-semibold transition-colors hover:text-primary text-foreground bg-muted/30 rounded-lg"
                         >
                           {item.name}
                         </Link>
@@ -346,7 +338,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                       <Link
                         to={item.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className="block px-4 py-3 text-sm font-medium transition-colors hover:text-primary text-foreground/80 hover:bg-muted/30 rounded-lg mx-2"
+                        className="block px-4 py-3 text-sm font-medium transition-colors hover:text-primary text-foreground/80 hover:bg-muted/30 rounded-lg"
                       >
                         {item.name}
                       </Link>

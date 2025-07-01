@@ -1,3 +1,4 @@
+
 "use client"
 import { useEffect, useState, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
@@ -7,108 +8,105 @@ import { DollarSign, Settings, Shield, Target, ChevronRight } from "lucide-react
 
 export default function TimelineSection() {
   const [activeSection, setActiveSection] = useState("growth-solutions")
-  const [isNavFixed, setIsNavFixed] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const strategicRef = useRef<HTMLHeadingElement>(null);
+  const [isNavFixed, setIsNavFixed] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const visibleSections = entries
           .filter((entry) => entry.isIntersecting)
-          .map((entry) => entry.target);
+          .map((entry) => entry.target)
 
         if (visibleSections.length > 0) {
           visibleSections.sort(
             (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
-          );
-          setActiveSection(visibleSections[0].id);
+          )
+          setActiveSection(visibleSections[0].id)
         }
       },
       {
         rootMargin: "0px 0px -40% 0px",
         threshold: 0.2,
       }
-    );
+    )
 
-    const sectionsToObserve = document.querySelectorAll("section[id]");
+    const sectionsToObserve = document.querySelectorAll("section[id]")
     sectionsToObserve.forEach((section) => {
-      observer.observe(section);
-    });
+      observer.observe(section)
+    })
 
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      setIsNavFixed(rect.top <= 80 && rect.bottom > 120);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      if (!sectionRef.current) return
+      const rect = sectionRef.current.getBoundingClientRect()
+      setIsNavFixed(rect.top <= 80 && rect.bottom > 200)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const scrollToSection = (id: string) => {
-    let element: HTMLElement | null = null;
-    if (id === "strategic-solutions" && strategicRef.current) {
-      element = strategicRef.current;
-    } else {
-      element = document.getElementById(id);
-    }
+    const element = document.getElementById(id)
     if (element) {
-      const headerOffset = 160;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const headerOffset = 140
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
-      });
+      })
     }
-  };
+  }
 
   const sections = [
     { id: "growth-solutions", title: "Growth Solutions" },
     { id: "strategic-solutions", title: "Strategic Solutions" },
   ]
 
-  const location = useLocation();
-  const showNav = location.pathname === "/";
+  const location = useLocation()
+  const showNav = location.pathname === "/"
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section at the top */}
-      <div className="bg-background py-12 sm:py-16">
+      {/* Hero Section */}
+      <div className="bg-background py-8 md:py-12 lg:py-16">
         <div className="container">
-          <h1 className="text-3xl sm:text-4xl md:text-4xl font-bold mb-4 sm:mb-6 text-left text-primary px-2">Our Solutions</h1>
-          <p className="text-base sm:text-lg md:text-2xl text-left max-w-4xl px-2">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 lg:mb-6 text-left text-primary px-2">Our Solutions</h1>
+          <p className="text-sm md:text-base lg:text-lg xl:text-2xl text-left max-w-4xl px-2 leading-relaxed">
             Whether you're launching something new or optimizing what's already working, we deliver what your business
             needs to grow, adapt, and move faster.
           </p>
         </div>
       </div>
 
-      {/* LEFT NAVIGATION - STICKY WITHIN THIS SECTION ONLY */}
-      <div ref={sectionRef} className="container py-8 relative">
-        <div className="flex flex-row items-start pt-4">
-          {/* Sticky Left Nav with Both Items - Only sticky within this container */}
+      {/* Main Content Section */}
+      <div ref={sectionRef} className="container py-4 md:py-8 relative">
+        <div className="flex flex-col lg:flex-row items-start">
+          {/* Desktop Sticky Left Nav */}
           {showNav && (
             <div 
+              ref={navRef}
               className={cn(
-                "hidden lg:flex flex-col w-[280px] mr-8 space-y-4",
-                isNavFixed ? "fixed top-24 z-50" : "sticky top-24 z-50"
+                "hidden lg:flex flex-col w-72 space-y-6 transition-all duration-300",
+                isNavFixed 
+                  ? "fixed top-24 left-8 z-40" 
+                  : "sticky top-24 z-40"
               )}
-              style={isNavFixed ? { left: '6rem' } : { marginLeft: '4rem' }}
             >
               {sections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
                   className={cn(
-                    "text-xl font-bold w-[280px] text-left whitespace-nowrap transition-colors",
+                    "text-xl font-bold text-left whitespace-nowrap transition-all duration-300 px-4 py-3 rounded-lg",
                     activeSection === section.id
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-primary"
+                      ? "text-primary bg-primary/10 border-l-4 border-primary"
+                      : "text-muted-foreground hover:text-primary hover:bg-muted/50"
                   )}
                 >
                   {section.title}
@@ -118,20 +116,23 @@ export default function TimelineSection() {
           )}
           
           {/* Main Content */}
-          <div className={cn("flex-1", showNav && isNavFixed ? "ml-80" : showNav ? "ml-0" : "")}>
+          <div className={cn(
+            "flex-1 w-full",
+            showNav ? "lg:ml-80" : ""
+          )}>
             <main className="max-w-none">
               {/* Growth Solutions Section */}
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-0 mb-2 text-primary px-2">Growth Solutions</h2>
-              <section id="growth-solutions" className="py-0 mb-12 sm:mb-16 mt-0">
-                <p className="mb-6 mt-0 text-muted-foreground leading-relaxed px-2">
+              <section id="growth-solutions" className="mb-12 md:mb-16 lg:mb-20">
+                <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 md:mb-3 text-primary px-2">Growth Solutions</h2>
+                <p className="mb-4 md:mb-6 text-sm md:text-base text-muted-foreground leading-relaxed px-2">
                   You need more customers, more engagement, and more momentum. If your priority is to attract the right
                   audience, convert consistently, and expand your market reach, our Growth Solutions are built for you. We
                   deliver high-performance marketing strategy and execution that engineers demand, amplifies brand value,
                   and accelerates customer acquisition.
                 </p>
 
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Core Growth Solutions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Core Growth Solutions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-4 md:mb-6 px-2">
                   {[
                     {
                       link: "/growth-solutions/performance-marketing",
@@ -179,27 +180,26 @@ export default function TimelineSection() {
                     <Link
                       key={index}
                       to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
                     >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
                         <img
                           src={item.icon}
                           alt={item.title}
-                          className="w-10 h-10 object-contain dark:invert"
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain dark:invert"
                         />
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
                       </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
                     </Link>
                   ))}
                 </div>
 
-                
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Specialized Growth Solutions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Specialized Growth Solutions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8 px-2">
                   {[
                     {
                       link: "/specialized-growth-solutions/audit-insights",
@@ -247,35 +247,35 @@ export default function TimelineSection() {
                     <Link
                       key={index}
                       to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
                     >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
                         <img
                           src={item.icon}
                           alt={item.title}
-                          className="w-10 h-10 object-contain dark:invert"
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain dark:invert"
                         />
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
                       </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
                     </Link>
                   ))}
                 </div>
 
-                <div className="text-center">
-                <Button className="font-semibold text-lg mb-4" size="lg" asChild>
+                <div className="text-center px-2">
+                  <Button className="font-semibold text-sm md:text-base lg:text-lg mb-4" size="lg" asChild>
                     <a href="/contact">Ready to move faster? Let's talk.</a>
                   </Button>
                 </div>
               </section>
 
               {/* Strategic Solutions Section */}
-              <h2 ref={strategicRef} className="text-2xl sm:text-3xl md:text-4xl font-bold mt-0 mb-2 text-primary">Strategic Solutions</h2>
-              <section id="strategic-solutions" className="py-0 mb-12 sm:mb-16 mt-0">
-                <p className="mb-6 mt-0 text-muted-foreground leading-relaxed">
+              <section id="strategic-solutions" className="mb-12 md:mb-16 lg:mb-20">
+                <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 md:mb-3 text-primary px-2">Strategic Solutions</h2>
+                <p className="mb-4 md:mb-6 text-sm md:text-base text-muted-foreground leading-relaxed px-2">
                   You need to improve efficiency, automate intelligently, and ensure operations scale without chaos. If
                   you're navigating operational bottlenecks, automation gaps, or complex scaling challenges, our Strategic
                   Solutions offer high-ROI tailored strategy and implementations that are built for precision,
@@ -283,8 +283,8 @@ export default function TimelineSection() {
                   at the next level with minimal disruption.
                 </p>
 
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Core Strategic Solutions</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Core Strategic Solutions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-4 md:mb-6 px-2">
                   {[
                     {
                       link: "/strategic-solutions/process-automation",
@@ -314,26 +314,26 @@ export default function TimelineSection() {
                     <Link
                       key={index}
                       to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
                     >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
                         <img
                           src={item.icon}
                           alt={item.title}
-                          className="w-10 h-10 object-contain dark:invert"
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain dark:invert"
                         />
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
                       </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
                     </Link>
                   ))}
                 </div>
 
-                <h4 className="text-lg sm:text-xl font-semibold mb-4 text-primary">Solutions By Function</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Solutions By Function</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8 px-2">
                   {[
                     {
                       title: "Finance",
@@ -363,22 +363,22 @@ export default function TimelineSection() {
                     <Link
                       key={index}
                       to={item.link}
-                      className="flex items-center gap-4 p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 mb-3"
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
                     >
-                      <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
-                        <item.icon className="w-6 h-6" />
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                        <item.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
-                        <p className="text-xs text-black dark:text-white leading-tight line-clamp-2">{item.desc}</p>
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
                       </div>
-                      <ChevronRight className="w-5 h-5 ml-2 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
                     </Link>
                   ))}
                 </div>
 
-                <div className="text-center">
-                  <Button className="font-semibold text-lg mb-4" size="lg" asChild>
+                <div className="text-center px-2">
+                  <Button className="font-semibold text-sm md:text-base lg:text-lg mb-4" size="lg" asChild>
                     <a href="/contact">Ready to move faster? Let's talk.</a>
                   </Button>
                 </div>
