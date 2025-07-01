@@ -176,7 +176,9 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                     <button
                       onClick={() => handleDropdownClick(item.name)}
                       onMouseEnter={() => handleMouseEnter(item.name)}
-                      className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary whitespace-nowrap py-2 text-primary`}
+                      className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-white whitespace-nowrap py-2 ${
+                        isActive(item.href) ? 'text-primary' : 'text-primary'
+                      }`}
                     >
                       <span>{item.name}</span>
                       <ChevronDown 
@@ -193,12 +195,8 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: 'easeOut' }}
-                          className="absolute mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden"
-                          style={{ 
-                            width: '640px',
-                            left: '50%',
-                            transform: 'translateX(-50%)'
-                          }}
+                          className="absolute mt-2 bg-background border border-border rounded-xl shadow-2xl z-[100] overflow-hidden left-1/2 transform -translate-x-1/2"
+                          style={{ width: '640px' }}
                           onMouseEnter={clearDropdownTimeout}
                           onMouseLeave={handleMouseLeave}
                         >
@@ -296,7 +294,7 @@ const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden fixed inset-0 top-[56px] bg-background z-[100] overflow-y-auto h-screen"
+              className="lg:hidden fixed inset-0 top-[56px] bg-background z-[100] overflow-y-auto"
             >
               <div className="p-4 space-y-3 min-h-full">
                 {navigation.map((item) => (

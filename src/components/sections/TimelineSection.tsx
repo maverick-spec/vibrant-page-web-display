@@ -1,203 +1,392 @@
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { TrendingUp, Target, Users, Zap, ArrowRight, CheckCircle, Lightbulb, Search, Eye, Layers, Flag, Wrench, Cog, BarChart3, Repeat, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+"use client"
+import { useEffect, useState, useRef } from "react"
+import { Link, useLocation } from "react-router-dom"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { DollarSign, Settings, Shield, Target, ChevronRight } from "lucide-react"
 
-const TimelineSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('growth');
+export default function TimelineSection() {
+  const [activeSection, setActiveSection] = useState("growth-solutions")
+  const [isNavFixed, setIsNavFixed] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
 
-  const growthContent = {
-    icon: TrendingUp,
-    title: 'Growth Solutions',
-    subtitle: 'High-Performance Marketing',
-    description: 'You need more customers, more engagement, and more momentum. If your priority is to attract the right audience, convert consistently, and expand your market reach, our Growth Solutions are built for you. We deliver high-performance marketing strategy and execution that engineers demand, amplifies brand value, and accelerates customer acquisition.',
-    solutions: [
-      {
-        icon: Users,
-        title: 'Performance Marketing & Paid Media',
-        description: 'Data-driven campaigns that maximize ROI and drive qualified leads.'
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .map((entry) => entry.target)
+
+        if (visibleSections.length > 0) {
+          visibleSections.sort(
+            (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
+          )
+          setActiveSection(visibleSections[0].id)
+        }
       },
       {
-        icon: Sparkles,
-        title: 'Social Media Marketing & Brand Engagement',
-        description: 'Strategic social presence that builds community and drives conversions.'
-      },
-      {
-        icon: Repeat,
-        title: 'Email Marketing & Marketing Automation',
-        description: 'Nurture sequences that convert prospects into loyal customers.'
-      },
-      {
-        icon: Lightbulb,
-        title: 'Creative Solutions',
-        description: 'Compelling creative assets that capture attention and drive action.'
-      },
-      {
-        icon: BarChart3,
-        title: 'Conversion Rate Optimization',
-        description: 'Systematic testing and optimization to maximize your conversion rates.'
-      },
-      {
-        icon: Search,
-        title: 'SEO & Website Growth',
-        description: 'Organic visibility strategies that drive sustainable traffic growth.'
+        rootMargin: "0px 0px -40% 0px",
+        threshold: 0.2,
       }
-    ]
-  };
+    )
 
-  const strategicContent = {
-    icon: Target,
-    title: 'Strategic Solutions',
-    subtitle: 'Technology-Enhanced Operational Scaling',
-    description: 'High-ROI business process enhancement that streamlines operations, automates intelligently, and scales with precision. We help you improve efficiency and ensure operations scale without chaos.',
-    solutions: [
-      {
-        icon: Cog,
-        title: 'Process & Workflow Automation',
-        description: 'Intelligent automation that eliminates bottlenecks and reduces manual work.'
-      },
-      {
-        icon: Layers,
-        title: 'Digital Systems Enablement',
-        description: 'Technology integration that connects your tools and data seamlessly.'
-      },
-      {
-        icon: Wrench,
-        title: 'Custom Solution Engineering',
-        description: 'Tailored solutions designed specifically for your business needs.'
-      },
-      {
-        icon: Flag,
-        title: 'Enterprise Evolution & Strategic Transformation',
-        description: 'Large-scale transformations that position your business for future growth.'
-      }
-    ]
-  };
+    const sectionsToObserve = document.querySelectorAll("section[id]")
+    sectionsToObserve.forEach((section) => {
+      observer.observe(section)
+    })
 
-  const currentContent = activeTab === 'growth' ? growthContent : strategicContent;
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return
+      const rect = sectionRef.current.getBoundingClientRect()
+      setIsNavFixed(rect.top <= 80 && rect.bottom > 200)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      const headerOffset = 140
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      })
+    }
+  }
+
+  const sections = [
+    { id: "growth-solutions", title: "Growth Solutions" },
+    { id: "strategic-solutions", title: "Strategic Solutions" },
+  ]
+
+  const location = useLocation()
+  const showNav = location.pathname === "/"
 
   return (
-    <section className="py-16 sm:py-20 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        {/* Header Section */}
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4 sm:mb-6">
-            Our Solutions
-          </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto">
-            Whether you're launching something new or optimizing what's already working, we deliver what your business needs to grow, adapt, and move faster.
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <div className="bg-background py-8 md:py-12 lg:py-16">
+        <div className="container">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 lg:mb-6 text-left text-primary px-2">Our Solutions</h1>
+          <p className="text-sm md:text-base lg:text-lg xl:text-2xl text-left max-w-4xl px-2 leading-relaxed">
+            Whether you're launching something new or optimizing what's already working, we deliver what your business
+            needs to grow, adapt, and move faster.
           </p>
         </div>
+      </div>
 
-        {/* Solutions Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Left Sidebar - Solution Tabs */}
-          <div className="lg:col-span-3">
-            <div className="lg:sticky lg:top-24 space-y-4">
-              <button
-                onClick={() => setActiveTab('growth')}
-                className={`w-full text-left p-4 sm:p-6 rounded-xl border-2 transition-all duration-300 ${
-                  activeTab === 'growth' 
-                    ? 'border-primary bg-primary/10 text-primary' 
-                    : 'border-muted bg-muted/30 text-muted-foreground hover:border-primary/50 hover:bg-primary/5'
-                }`}
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <TrendingUp className="w-5 h-5" />
-                  <span className="font-semibold text-lg">Growth Solutions</span>
-                </div>
-                <p className="text-sm opacity-80">High-Performance Marketing</p>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('strategic')}
-                className={`w-full text-left p-4 sm:p-6 rounded-xl border-2 transition-all duration-300 ${
-                  activeTab === 'strategic' 
-                    ? 'border-primary bg-primary/10 text-primary' 
-                    : 'border-muted bg-muted/30 text-muted-foreground hover:border-primary/50 hover:bg-primary/5'
-                }`}
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <Target className="w-5 h-5" />
-                  <span className="font-semibold text-lg">Strategic Solutions</span>
-                </div>
-                <p className="text-sm opacity-80">Technology-Enhanced Operational Scaling</p>
-              </button>
-            </div>
-          </div>
-
-          {/* Right Content Area */}
-          <div className="lg:col-span-9">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-8"
+      {/* Main Content Section */}
+      <div ref={sectionRef} className="container py-4 md:py-8 relative">
+        <div className="flex flex-col lg:flex-row items-start">
+          {/* Desktop Sticky Left Nav */}
+          {showNav && (
+            <div 
+              ref={navRef}
+              className={cn(
+                "hidden lg:flex flex-col w-72 space-y-6 transition-all duration-300",
+                isNavFixed 
+                  ? "fixed top-24 left-8 z-40" 
+                  : "sticky top-24 z-40"
+              )}
             >
-              {/* Content Header */}
-              <div className="text-center lg:text-left">
-                <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <currentContent.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{currentContent.title}</h3>
-                    <p className="text-primary font-medium">{currentContent.subtitle}</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                  {currentContent.description}
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={cn(
+                    "text-xl font-bold text-left whitespace-nowrap transition-all duration-300 px-4 py-3 rounded-lg",
+                    activeSection === section.id
+                      ? "text-primary bg-primary/10 border-l-4 border-primary"
+                      : "text-muted-foreground hover:text-primary hover:bg-muted/50"
+                  )}
+                >
+                  {section.title}
+                </button>
+              ))}
+            </div>
+          )}
+          
+          {/* Main Content */}
+          <div className={cn(
+            "flex-1 w-full",
+            showNav ? "lg:ml-80" : ""
+          )}>
+            <main className="max-w-none">
+              {/* Growth Solutions Section */}
+              <section id="growth-solutions" className="mb-12 md:mb-16 lg:mb-20">
+                <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 md:mb-3 text-primary px-2">Growth Solutions</h2>
+                <p className="mb-4 md:mb-6 text-sm md:text-base text-muted-foreground leading-relaxed px-2">
+                  You need more customers, more engagement, and more momentum. If your priority is to attract the right
+                  audience, convert consistently, and expand your market reach, our Growth Solutions are built for you. We
+                  deliver high-performance marketing strategy and execution that engineers demand, amplifies brand value,
+                  and accelerates customer acquisition.
                 </p>
-              </div>
 
-              {/* Solutions Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {currentContent.solutions.map((solution, index) => (
-                  <motion.div
-                    key={solution.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <Card className="h-full hover:shadow-lg transition-all duration-300">
-                      <CardHeader className="pb-4">
-                        <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <solution.icon className="w-5 h-5 text-primary" />
-                          </div>
-                          <div>
-                            <CardTitle className="text-lg font-bold text-foreground leading-tight">
-                              {solution.title}
-                            </CardTitle>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <p className="text-muted-foreground text-sm">
-                          {solution.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Core Growth Solutions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-4 md:mb-6 px-2">
+                  {[
+                    {
+                      link: "/growth-solutions/performance-marketing",
+                      icon: "/Growth Solutions Icons/PerformanceMarketing&PaidMedia.png",
+                      title: "Performance Marketing & Paid Media",
+                      desc: "High-ROI ads that convert."
+                    },
+                    {
+                      link: "/growth-solutions/social-media-marketing",
+                      icon: "/Growth Solutions Icons/Social Media Marketing & Brand Engagement.png",
+                      title: "Social Media Marketing & Brand Engagement",
+                      desc: "Build audience, spark action."
+                    },
+                    {
+                      link: "/growth-solutions/email-marketing",
+                      icon: "/Growth Solutions Icons/Email Marketing & Marketing Automation.png",
+                      title: "Email Marketing & Marketing Automation",
+                      desc: "Automate nurture, drive loyalty."
+                    },
+                    {
+                      link: "/growth-solutions/creative-solutions",
+                      icon: "/Growth Solutions Icons/Creative Solutions.png",
+                      title: "Creative Solutions",
+                      desc: "Visuals that get results."
+                    },
+                    {
+                      link: "/growth-solutions/conversion-optimization",
+                      icon: "/Growth Solutions Icons/Conversion Rate Optimization.png",
+                      title: "Conversion Rate Optimization (CRO)",
+                      desc: "Test. Refine. Convert more."
+                    },
+                    {
+                      link: "/growth-solutions/seo-website-growth",
+                      icon: "/Growth Solutions Icons/Search Engine Optimization (SEO) & Website Growth.png",
+                      title: "Search Engine Optimization (SEO) & Website Growth",
+                      desc: "Rank higher. Grow faster."
+                    },
+                    {
+                      link: "/growth-solutions/website-solutions",
+                      icon: "/Growth Solutions Icons/Website Solutions.png",
+                      title: "Website Solutions",
+                      desc: "Seamless, scalable, conversion-ready."
+                    }
+                  ].map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.link}
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                    >
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                        <img
+                          src={item.icon}
+                          alt={item.title}
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain dark:invert"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
+                    </Link>
+                  ))}
+                </div>
 
-              {/* CTA Button */}
-              <div className="text-center lg:text-left pt-8">
-                <Button size="lg" className="group">
-                  Learn More About {currentContent.title}
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-            </motion.div>
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Specialized Growth Solutions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8 px-2">
+                  {[
+                    {
+                      link: "/specialized-growth-solutions/audit-insights",
+                      icon: "/Specialized Growth Solutions Icons/Deep Dive Audit & Strategic Insights.png",
+                      title: "Deep Dive Audit & Strategic Insights",
+                      desc: "Clarity through expert analysis."
+                    },
+                    {
+                      link: "/specialized-growth-solutions/analytics-tracking",
+                      icon: "/Specialized Growth Solutions Icons/Analytics and Event Tracking Setup.png",
+                      title: "Analytics and Event Tracking Setup",
+                      desc: "Track what matters, measure what works."
+                    },
+                    {
+                      link: "/specialized-growth-solutions/lead-generation",
+                      icon: "/Specialized Growth Solutions Icons/Lead Generation & Funnel Strategy.png",
+                      title: "Lead Generation & Funnel Strategy",
+                      desc: "Build funnels that convert."
+                    },
+                    {
+                      link: "/specialized-growth-solutions/brand-architecture",
+                      icon: "/Specialized Growth Solutions Icons/Brand Architecture & Strategy.png",
+                      title: "Brand Architecture & Strategy",
+                      desc: "Define, differentiate, scale."
+                    },
+                    {
+                      link: "/specialized-growth-solutions/content-strategy",
+                      icon: "/Specialized Growth Solutions Icons/Content Strategy & Planning.png",
+                      title: "Content Strategy & Marketing",
+                      desc: "Create content that drives action."
+                    },
+                    {
+                      link: "/specialized-growth-solutions/ai-content",
+                      icon: "/Specialized Growth Solutions Icons/AI-Accelerated Content Production Pipelines.png",
+                      title: "AI-Accelerated Content Production Pipelines",
+                      desc: "Scale content with AI precision."
+                    },
+                    {
+                      link: "/specialized-growth-solutions/executive-branding",
+                      icon: "/Specialized Growth Solutions Icons/Executive Personal Branding & LinkedIn Marketing.png",
+                      title: "Executive Personal Branding & LinkedIn Marketing",
+                      desc: "Elevate presence, grow influence."
+                    }
+                  ].map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.link}
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                    >
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                        <img
+                          src={item.icon}
+                          alt={item.title}
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain dark:invert"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="text-center px-2">
+                  <Button className="font-semibold text-sm md:text-base lg:text-lg mb-4" size="lg" asChild>
+                    <a href="/contact">Ready to move faster? Let's talk.</a>
+                  </Button>
+                </div>
+              </section>
+
+              {/* Strategic Solutions Section */}
+              <section id="strategic-solutions" className="mb-12 md:mb-16 lg:mb-20">
+                <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 md:mb-3 text-primary px-2">Strategic Solutions</h2>
+                <p className="mb-4 md:mb-6 text-sm md:text-base text-muted-foreground leading-relaxed px-2">
+                  You need to improve efficiency, automate intelligently, and ensure operations scale without chaos. If
+                  you're navigating operational bottlenecks, automation gaps, or complex scaling challenges, our Strategic
+                  Solutions offer high-ROI tailored strategy and implementations that are built for precision,
+                  scalability, and efficiency. From workflow orchestration to platform optimization, we help you execute
+                  at the next level with minimal disruption.
+                </p>
+
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Core Strategic Solutions</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-4 md:mb-6 px-2">
+                  {[
+                    {
+                      link: "/strategic-solutions/process-automation",
+                      icon: "/Strategic Solutions Icons/Process & Workflow Automation.png",
+                      title: "Process & Workflow Automation",
+                      desc: "Automate execution. Eliminate friction."
+                    },
+                    {
+                      link: "/strategic-solutions/digital-systems-enablement",
+                      icon: "/Strategic Solutions Icons/Digital Systems Enablement.png",
+                      title: "Digital Systems Enablement",
+                      desc: "Optimize platforms. Empower teams."
+                    },
+                    {
+                      link: "/strategic-solutions/custom-solution-engineering",
+                      icon: "/Strategic Solutions Icons/Custom Solution Engineering.png",
+                      title: "Custom Solution Engineering",
+                      desc: "Solve complex. Deliver fast."
+                    },
+                    {
+                      link: "/strategic-solutions/enterprise-evolution-strategic-transformation",
+                      icon: "/Strategic Solutions Icons/Enterprise Evolution & Strategic Transformation.png",
+                      title: "Enterprise Evolution & Strategic Transformation",
+                      desc: "Reshape. Scale. Future-proof."
+                    }
+                  ].map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.link}
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                    >
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                        <img
+                          src={item.icon}
+                          alt={item.title}
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain dark:invert"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
+                    </Link>
+                  ))}
+                </div>
+
+                <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-primary px-2">Solutions By Function</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8 px-2">
+                  {[
+                    {
+                      title: "Finance",
+                      desc: "Automate reporting. Accelerate reconciliation.",
+                      icon: DollarSign,
+                      link: "/strategic-solutions/finance-operations"
+                    },
+                    {
+                      title: "Operations",
+                      desc: "Unblock execution. Speed up critical workflows.",
+                      icon: Settings,
+                      link: "/strategic-solutions/operations"
+                    },
+                    {
+                      title: "Compliance & Governance",
+                      desc: "Reduce risk. Ensure audit-ready control.",
+                      icon: Shield,
+                      link: "/strategic-solutions/compliance-governance"
+                    },
+                    {
+                      title: "Cross-Functional Leadership",
+                      desc: "Align departments. Orchestrate complex delivery.",
+                      icon: Target,
+                      link: "/strategic-solutions/cross-functional-leadership"
+                    }
+                  ].map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.link}
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                    >
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 flex items-center justify-center bg-primary/10 dark:bg-primary/20 rounded-lg">
+                        <item.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <h5 className="font-semibold text-foreground text-xs md:text-sm mb-1 leading-tight line-clamp-2">{item.title}</h5>
+                        <p className="text-xs text-muted-foreground leading-tight line-clamp-2">{item.desc}</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2 flex-shrink-0 text-muted-foreground" />
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="text-center px-2">
+                  <Button className="font-semibold text-sm md:text-base lg:text-lg mb-4" size="lg" asChild>
+                    <a href="/contact">Ready to move faster? Let's talk.</a>
+                  </Button>
+                </div>
+              </section>
+            </main>
           </div>
         </div>
       </div>
-    </section>
-  );
-};
-
-export default TimelineSection;
+    </div>
+  )
+}
