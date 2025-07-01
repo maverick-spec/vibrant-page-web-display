@@ -52,9 +52,39 @@ const SolvePathFramework: React.FC = () => {
     }
   ];
 
+  const useCases = [
+    "Diagnose and untangle complex, interdependent issues",
+    "Identify meaningful opportunities hidden within operations, systems, or customer journeys",
+    "Convert loosely defined pain points into structured, high-value solution spaces",
+    "Develop and deliver scalable solutions through concept design, validation, and execution"
+  ];
+
+  const problemExamples = [
+    {
+      type: "Problem",
+      example: "Manual invoice processing is delaying payments by 10–15 days, causing friction with vendors.",
+      impact: "Clear financial impact and operational drag"
+    },
+    {
+      type: "Problem",
+      example: "Internal ticketing takes 4+ touchpoints before resolution, frustrating both users and IT.",
+      impact: "Reveals a need for better routing and workflow logic"
+    },
+    {
+      type: "Opportunity",
+      example: "We have clean access to historical performance data that hasn't been centralized for analysis.",
+      impact: "Unused asset that could support better decisions"
+    },
+    {
+      type: "Opportunity",
+      example: "Customers have shown interest in live onboarding, but we haven't explored real-time support.",
+      impact: "Direct customer signal tied to conversion potential"
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-background pt-16 md:pt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl pt-20">
         {/* Back Link */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -104,17 +134,17 @@ const SolvePathFramework: React.FC = () => {
           >
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">The Solution Design Framework is used to:</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              {[
-                "Diagnose and untangle complex, interdependent issues",
-                "Identify meaningful opportunities hidden within operations, systems, or customer journeys",
-                "Convert loosely defined pain points into structured, high-value solution spaces",
-                "Develop and deliver scalable solutions through concept design, validation, and execution"
-              ].map((item, index) => (
+              {useCases.map((item, index) => (
                 <div key={index} className="flex items-start">
                   <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-primary mr-2 md:mr-3 flex-shrink-0 mt-0.5 md:mt-1" />
                   <p className="text-sm md:text-base text-muted-foreground">{item}</p>
                 </div>
               ))}
+            </div>
+            <div className="mt-6 p-4 bg-background rounded-lg">
+              <p className="text-sm md:text-base text-muted-foreground font-medium">
+                The Solution Design Framework is not a theory or abstraction—it's a practical sequence built to help decision-makers and operators move forward with confidence and clarity. It adapts to cross-functional use cases, supports both strategic and tactical problem solving, and allows for modular implementation depending on context and stage.
+              </p>
             </div>
           </motion.div>
         </section>
@@ -174,83 +204,88 @@ const SolvePathFramework: React.FC = () => {
           </div>
         </section>
 
-        {/* Detailed Stage 1 Section */}
+        {/* Problems and Opportunities Examples */}
         <section className="mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="prose prose-lg max-w-none"
           >
-            <div className="bg-muted/30 rounded-2xl p-6 md:p-8 mb-6 md:mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">Stage 1: Identify Problems & Opportunities</h2>
-              <p className="text-base md:text-lg text-muted-foreground mb-4 md:mb-6">
-                Pinpoint what's holding the business back—or what could propel it forward.
-              </p>
-              <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
-                The first step in the Solution Design Framework is to define what's worth solving. This means identifying the problems that create measurable friction or risk, and surfacing the opportunities that represent untapped value or strategic upside.
-              </p>
-              <p className="text-sm md:text-base text-muted-foreground">
-                This stage requires moving beyond vague complaints or open-ended goals. It's about surfacing the right inputs to work on—those with enough significance, urgency, or potential return to justify structured attention and resource investment.
-              </p>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-primary text-center">
+              Problems and Opportunities Examples
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              {problemExamples.map((example, index) => (
+                <Card key={index} className="h-full">
+                  <CardHeader>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        example.type === 'Problem' 
+                          ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300' 
+                          : 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
+                      }`}>
+                        {example.type}
+                      </span>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm md:text-base text-foreground mb-3 font-medium">
+                      "{example.example}"
+                    </p>
+                    <p className="text-xs md:text-sm text-muted-foreground">
+                      <strong>Why It Matters:</strong> {example.impact}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
+          </motion.div>
+        </section>
 
-            {/* Problems Section */}
-            <div className="bg-muted/30 rounded-2xl p-6 md:p-8 mb-6 md:mb-8">
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">Problems</h3>
-              <p className="text-sm md:text-base text-muted-foreground mb-4">
-                Problems are recurring inefficiencies, constraints, or breakdowns that degrade performance, increase cost, or limit growth. Not all problems are worth solving—but those that show up repeatedly, affect multiple systems or teams, or have visible consequences are usually strong candidates.
+        {/* Framework Summary */}
+        <section className="mb-12 md:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 md:p-8"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">
+              The Solution Design Framework Summary
+            </h2>
+            <p className="text-lg text-primary font-semibold text-center mb-6">
+              A clear path from insight to impact.
+            </p>
+            <div className="max-w-4xl mx-auto">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
+                The Solution Design Framework provides a clear, repeatable path from complexity to clarity—transforming scattered problems and untapped opportunities into strategic, high-impact solutions. This framework is designed to be applied flexibly across industries and use cases, while providing shared clarity around what each stage means, why it matters, and how to execute it well.
               </p>
               
-              <h4 className="text-lg font-semibold text-foreground mb-3">Guidelines for Identifying Problems</h4>
-              <div className="space-y-2 mb-4">
-                {[
-                  "Focus on the impact: What is this problem costing in time, money, efficiency, or customer experience?",
-                  "Separate symptoms from root problems: \"Sales are down\" is a symptom—look deeper to find what's driving the decline.",
-                  "Validate with data and observation: Avoid solving based on anecdote alone. Even directional data adds clarity.",
-                  "Be precise with language: Problems should be stated clearly, without assuming solutions.",
-                  "Prioritize what is visible, persistent, and meaningful."
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start">
-                    <CheckCircle className="w-4 h-4 text-primary mr-2 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-muted-foreground">{item}</p>
-                  </div>
-                ))}
-              </div>
-
-              <h4 className="text-lg font-semibold text-foreground mb-3">How to Construct Effective Problem Statements</h4>
-              <div className="bg-background rounded-lg p-4 mb-4">
-                <p className="text-sm text-muted-foreground mb-2"><strong>Poor Statement:</strong> "Our onboarding process is a mess."</p>
-                <p className="text-sm text-muted-foreground"><strong>Refined Statement:</strong> "Customer onboarding takes an average of 14 days, resulting in a 22% drop-off rate before activation."</p>
-              </div>
-            </div>
-
-            {/* Opportunities Section */}
-            <div className="bg-muted/30 rounded-2xl p-6 md:p-8 mb-6 md:mb-8">
-              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">Opportunities</h3>
-              <p className="text-sm md:text-base text-muted-foreground mb-4">
-                Opportunities represent leverage points—places where the organization can unlock growth, efficiency, or strategic advantage. These may come from shifts in customer behavior, internal capabilities that are underutilized, or market trends not yet capitalized on.
-              </p>
-              
-              <h4 className="text-lg font-semibold text-foreground mb-3">Guidelines for Identifying Opportunities</h4>
-              <div className="space-y-2 mb-4">
-                {[
-                  "Look at external forces: Are there shifts in technology, regulation, or behavior that open new pathways?",
-                  "Consider internal strengths: What assets, teams, or systems are underutilized or could be better applied?",
-                  "Evaluate competitive gaps: Are there areas where others are excelling—and you're not yet competing?",
-                  "Tie opportunities to specific outcomes: Avoid vague statements like \"we need to improve engagement\" unless they can be grounded in data or direction."
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start">
-                    <CheckCircle className="w-4 h-4 text-primary mr-2 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-muted-foreground">{item}</p>
-                  </div>
-                ))}
-              </div>
-
-              <h4 className="text-lg font-semibold text-foreground mb-3">How to Construct Effective Opportunity Statements</h4>
-              <div className="bg-background rounded-lg p-4">
-                <p className="text-sm text-muted-foreground mb-2"><strong>Vague Statement:</strong> "We should improve customer retention."</p>
-                <p className="text-sm text-muted-foreground"><strong>Refined Statement:</strong> "Competitors using AI-powered personalization have increased customer retention by 20%. We currently lack personalization capabilities in post-sale communications."</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <Card className="bg-background/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">How This Framework Helps</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2 text-sm">
+                      <li><strong>Clarity:</strong> Everyone speaks the same language about where we are and what's next</li>
+                      <li><strong>Speed:</strong> Cut through confusion and opinion with a clear process</li>
+                      <li><strong>Impact:</strong> Build smarter solutions that solve for both ROI and risk</li>
+                      <li><strong>Scalability:</strong> Apply this process from quick wins to enterprise-wide transformations</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+                
+                <Card className="bg-background/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Apply It Across the Business</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      This framework is designed to work across growth, strategic, operational, and creative projects. Whether you're designing a new marketing engine, automating internal processes, or tackling a large-scale transformation, this gives you a common structure to align teams, move faster, and deliver better outcomes.
+                    </p>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </motion.div>
